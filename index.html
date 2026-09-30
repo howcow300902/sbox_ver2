@@ -928,6 +928,21 @@ footer{padding:24px 18px;display:block;line-height:1.8}
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TG6GGCTG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
+<form name="kes-sbox-registration" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="kes-sbox-registration">
+  <input name="bot-field">
+  <input name="full_name">
+  <input name="phone">
+  <input name="organization">
+  <input name="business_type">
+  <input name="province">
+  <input name="delivery_address">
+  <textarea name="usage_purpose"></textarea>
+  <input name="requested_quantity">
+  <input name="source">
+  <input name="consent">
+</form>
+
 <main>
 <section class="hero">
   <div class="topbar">
@@ -1021,7 +1036,7 @@ footer{padding:24px 18px;display:block;line-height:1.8}
     </div>
 
     <div class="form-card">
-      <form id="sboxForm" name="kes-sbox-registration" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form id="sboxForm" name="kes-sbox-registration" method="POST" action="/success.html" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="kes-sbox-registration">
         <p style="display:none"><label>Không điền: <input name="bot-field"></label></p>
 
@@ -1069,7 +1084,7 @@ footer{padding:24px 18px;display:block;line-height:1.8}
 </section>
 </main>
 
-<footer><span>KES · SBOX MATERIAL KIT</span><span>Landing page concept v12 BLOCK TWEAKS · 2026</span></footer>
+<footer><span>KES · SBOX MATERIAL KIT</span><span>Landing page concept v13 NETLIFY FORM FIX · 2026</span></footer>
 
 <script>
 const stage=document.getElementById('stage');
@@ -1122,24 +1137,16 @@ if('IntersectionObserver' in window && !reduceMotion){
   revealTargets.forEach(el=>el.classList.add('is-visible'));
 }
 
-const form=document.getElementById('sboxForm'),success=document.getElementById('success');
-form.addEventListener('submit',async e=>{
-  e.preventDefault();
-  if(!form.reportValidity())return;
-  const btn=form.querySelector('.submit'),old=btn.textContent;
-  btn.disabled=true;btn.textContent='ĐANG GỬI...';
-  const body=new URLSearchParams(new FormData(form)).toString();
-  try{
-    const res=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body});
-    if(!res.ok)throw new Error('Netlify form submit failed');
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({event:'sbox_registration_success',form_name:'kes-sbox-registration'});
-    form.style.display='none';success.classList.add('show');success.scrollIntoView({behavior:'smooth',block:'center'});
-  }catch(err){
-    alert('Chưa gửi được đăng ký. Vui lòng thử lại sau.');
-    btn.disabled=false;btn.textContent=old;console.error(err);
-  }
-});
+const nativeForm=document.getElementById('sboxForm');
+if(nativeForm){
+  nativeForm.addEventListener('submit',()=>{
+    const btn=nativeForm.querySelector('.submit');
+    if(btn){
+      btn.disabled=true;
+      btn.textContent='ĐANG GỬI...';
+    }
+  });
+}
 </script>
 </body>
 </html>
