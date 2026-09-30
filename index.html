@@ -252,6 +252,28 @@ footer{padding:24px 18px;display:block;line-height:1.8}
   display:block;
   transition:transform .65s cubic-bezier(.2,.8,.2,1),filter .35s ease;
 }
+.feature-media--contain{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+.feature-media--contain figure{
+  aspect-ratio:auto;
+  min-height:320px;
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+}
+.feature-media--contain img{
+  object-fit:contain;
+  background:transparent;
+}
+.feature-media--single{
+  grid-template-columns:1fr;
+}
+.feature-media--single figure{
+  aspect-ratio:auto;
+  min-height:380px;
+}
+.feature-media--single img{
+  object-fit:contain;
+}
 .feature.has-media:hover .feature-media img{
   transform:scale(1.05);
   filter:saturate(1.03) contrast(1.02);
@@ -259,8 +281,8 @@ footer{padding:24px 18px;display:block;line-height:1.8}
 .feature-body{margin-top:auto}
 .feature--melamine .feature-media figure:nth-child(1){transform:rotate(-2deg) translateY(4px)}
 .feature--melamine .feature-media figure:nth-child(2){transform:rotate(2deg) translateY(-6px)}
-.feature--surface .feature-media figure:nth-child(1){transform:rotate(-2deg) translateY(-4px)}
-.feature--surface .feature-media figure:nth-child(2){transform:rotate(2deg) translateY(6px)}
+.feature--surface .feature-media figure{transform:none !important}
+.feature--melamine .feature-media--single figure{transform:none !important}
 
 .feature-experience{
   padding:0;
@@ -390,6 +412,517 @@ footer{padding:24px 18px;display:block;line-height:1.8}
   .experience-float{display:none}
 }
 
+
+/* ===== V8: synchronized 3-card system ===== */
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+  align-items:stretch;
+}
+.feature,
+.feature.has-media,
+.feature.feature-experience{
+  min-height:0;
+  height:100%;
+  padding:26px;
+  display:grid;
+  grid-template-rows:auto 330px auto;
+  gap:22px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:28px;
+  background:linear-gradient(155deg,rgba(255,255,255,.075),rgba(255,255,255,.02));
+  transform:none !important;
+}
+.feature:hover{transform:translateY(-6px) !important}
+.feature-no,
+.experience-index{
+  font-family:"Instrument Serif",serif;
+  font-size:52px;
+  line-height:1;
+  color:var(--mint);
+  letter-spacing:-.06em;
+  margin:0;
+}
+.feature-media,
+.feature-media--contain,
+.feature-media--single,
+.experience-gallery{
+  position:relative;
+  inset:auto;
+  margin:0;
+  width:100%;
+  height:330px;
+  min-height:0;
+  display:grid;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:22px;
+  overflow:hidden;
+  background:rgba(255,255,255,.025);
+  box-shadow:none;
+}
+.feature-media--single{grid-template-columns:1fr}
+.feature-media figure,
+.feature-media--single figure,
+.feature-media--contain figure{
+  margin:0;
+  width:100%;
+  height:100%;
+  min-height:0;
+  aspect-ratio:auto;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  overflow:hidden;
+  transform:none !important;
+  background:transparent;
+}
+.feature-media img,
+.feature-media--single img,
+.feature-media--contain img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  transform:none !important;
+  filter:none;
+}
+.feature-body,
+.experience-body{
+  margin:0;
+  align-self:end;
+}
+.feature-body h3,
+.experience-body h3{
+  margin:0 0 10px;
+  font-size:18px;
+  line-height:1.35;
+  color:#fff;
+}
+.feature-body p,
+.experience-body p{
+  margin:0;
+  font-size:12px;
+  line-height:1.75;
+  color:rgba(255,255,255,.56);
+}
+/* Block 03 uses the same media box, with a clean 2x2 editorial grid */
+.experience-gallery{
+  grid-template-columns:repeat(2,1fr);
+  grid-template-rows:repeat(2,1fr);
+  gap:8px;
+  padding:8px;
+}
+.experience-shot,
+.experience-shot:first-child,
+.experience-shot:nth-child(4){
+  display:block;
+  grid-row:auto;
+  grid-column:auto;
+  position:relative;
+  overflow:hidden;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#0a302d;
+}
+.experience-shot img{
+  width:100%;height:100%;object-fit:cover;
+  transform:scale(1.02);
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+  filter:saturate(.95) contrast(1.02);
+}
+.experience-shot:hover img{transform:scale(1.08)}
+.experience-copy,.experience-float{display:none !important}
+
+@media(max-width:980px){
+  .features{grid-template-columns:1fr}
+  .feature,.feature.has-media,.feature.feature-experience{
+    grid-template-rows:auto 360px auto;
+  }
+  .feature-media,.feature-media--contain,.feature-media--single,.experience-gallery{height:360px}
+}
+@media(max-width:620px){
+  .feature,.feature.has-media,.feature.feature-experience{
+    padding:20px;
+    grid-template-rows:auto 300px auto;
+    gap:18px;
+  }
+  .feature-media,.feature-media--contain,.feature-media--single,.experience-gallery{height:300px}
+}
+
+
+/* ===== V9 — compact image cards with bottom overlay ===== */
+.features.features--overlay{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+  align-items:stretch;
+  margin-top:56px;
+}
+.feature.feature--overlay{
+  position:relative;
+  display:block;
+  height:auto;
+  min-height:0;
+  aspect-ratio:4 / 5;
+  padding:0;
+  margin:0;
+  overflow:hidden;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.15);
+  background:#0a423d;
+  transform:none !important;
+  isolation:isolate;
+  box-shadow:0 18px 44px rgba(0,0,0,.13);
+}
+.feature.feature--overlay::before{
+  display:none;
+}
+.feature.feature--overlay:hover{
+  transform:translateY(-6px) !important;
+}
+.feature-visual{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  display:grid;
+  background:
+    radial-gradient(circle at 75% 18%,rgba(131,234,220,.08),transparent 34%),
+    linear-gradient(155deg,#0e4f49,#083e39);
+}
+.feature-visual--contain{
+  place-items:center;
+  padding:26px 22px 126px;
+}
+.feature-visual--contain img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  transition:transform .7s cubic-bezier(.2,.8,.2,1);
+}
+.feature-visual--gallery{
+  grid-template-columns:1.1fr .9fr;
+  grid-template-rows:1fr 1fr;
+  gap:5px;
+}
+.overlay-shot{
+  min-width:0;
+  min-height:0;
+  overflow:hidden;
+  background:#0b3834;
+}
+.overlay-shot:first-child{
+  grid-row:1 / 3;
+}
+.overlay-shot img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  filter:saturate(.95) contrast(1.03);
+  transform:scale(1.02);
+  transition:transform .7s cubic-bezier(.2,.8,.2,1);
+}
+.overlay-shot:nth-child(4){
+  display:none;
+}
+.feature.feature--overlay:hover .feature-visual--contain img{
+  transform:scale(1.035);
+}
+.feature.feature--overlay:hover .overlay-shot img{
+  transform:scale(1.07);
+}
+.feature.feature--overlay::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    linear-gradient(180deg,
+      rgba(2,28,26,0) 35%,
+      rgba(2,28,26,.08) 53%,
+      rgba(2,28,26,.72) 78%,
+      rgba(2,28,26,.96) 100%);
+}
+.feature-index{
+  position:absolute;
+  top:20px;
+  left:22px;
+  z-index:4;
+  margin:0;
+  font-family:"Instrument Serif",serif;
+  font-size:54px;
+  line-height:.9;
+  color:var(--mint);
+  letter-spacing:-.07em;
+  text-shadow:0 8px 28px rgba(0,0,0,.24);
+}
+.feature-overlay{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:4;
+  padding:54px 22px 22px;
+}
+.feature-overlay h3{
+  margin:0 0 8px;
+  color:#fff;
+  font-size:18px;
+  line-height:1.28;
+  font-weight:700;
+}
+.feature-overlay p{
+  margin:0;
+  max-width:34ch;
+  color:rgba(255,255,255,.66);
+  font-size:11.5px;
+  line-height:1.55;
+}
+.feature--melamine .feature-visual--contain,
+.feature--surface .feature-visual--contain{
+  padding-top:34px;
+}
+.feature--melamine .feature-visual--contain img,
+.feature--surface .feature-visual--contain img{
+  filter:none;
+}
+
+/* reduce total section height */
+.intro{
+  padding-top:96px;
+  padding-bottom:94px;
+}
+.intro-grid{
+  margin-bottom:0;
+}
+
+@media(max-width:980px){
+  .features.features--overlay{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .feature.feature--overlay{
+    aspect-ratio:4 / 4.7;
+  }
+  .feature.feature--overlay:nth-child(3){
+    grid-column:1 / -1;
+    aspect-ratio:16 / 8.2;
+  }
+  .feature.feature--overlay:nth-child(3) .feature-visual--gallery{
+    grid-template-columns:1.45fr .8fr .8fr;
+    grid-template-rows:1fr;
+  }
+  .feature.feature--overlay:nth-child(3) .overlay-shot:first-child{
+    grid-row:auto;
+  }
+  .feature.feature--overlay:nth-child(3) .overlay-shot:nth-child(4){
+    display:block;
+  }
+}
+
+@media(max-width:620px){
+  .features.features--overlay{
+    grid-template-columns:1fr;
+    gap:14px;
+    margin-top:38px;
+  }
+  .feature.feature--overlay,
+  .feature.feature--overlay:nth-child(3){
+    grid-column:auto;
+    aspect-ratio:4 / 4.65;
+  }
+  .feature.feature--overlay:nth-child(3) .feature-visual--gallery{
+    grid-template-columns:1.1fr .9fr;
+    grid-template-rows:1fr 1fr;
+  }
+  .feature.feature--overlay:nth-child(3) .overlay-shot:first-child{
+    grid-row:1 / 3;
+  }
+  .feature.feature--overlay:nth-child(3) .overlay-shot:nth-child(4){
+    display:none;
+  }
+  .feature-visual--contain{
+    padding:22px 16px 110px;
+  }
+  .feature-index{
+    top:16px;
+    left:17px;
+    font-size:46px;
+  }
+  .feature-overlay{
+    padding:48px 17px 17px;
+  }
+  .feature-overlay h3{
+    font-size:17px;
+    margin-bottom:6px;
+  }
+  .feature-overlay p{
+    font-size:11px;
+    line-height:1.5;
+  }
+  .intro{
+    padding-top:72px;
+    padding-bottom:72px;
+  }
+}
+
+
+/* ===== V10 OPTION — make blocks 01/02 visually match block 03 ===== */
+.feature--fullbleed{
+  background:#0b3f3a;
+}
+.feature--fullbleed .feature-backdrop{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+}
+.feature--fullbleed .feature-backdrop img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.18);
+  filter:blur(18px) saturate(.82) brightness(.58);
+  opacity:.78;
+}
+.feature--fullbleed .feature-artwork{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:grid;
+  place-items:center;
+  padding:34px 22px 112px;
+}
+.feature--fullbleed .feature-artwork img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:contain;
+  object-position:center;
+  filter:drop-shadow(0 16px 30px rgba(0,0,0,.18));
+  transition:transform .75s cubic-bezier(.2,.8,.2,1);
+}
+.feature--fullbleed:hover .feature-artwork img{
+  transform:scale(1.035);
+}
+.feature--fullbleed::after{
+  background:
+    linear-gradient(180deg,
+      rgba(2,28,26,.03) 0%,
+      rgba(2,28,26,.02) 42%,
+      rgba(2,28,26,.42) 66%,
+      rgba(2,28,26,.93) 100%);
+}
+.feature--fullbleed .feature-overlay{
+  padding-top:64px;
+}
+.feature--fullbleed .feature-index{
+  text-shadow:0 8px 28px rgba(0,0,0,.45);
+}
+
+/* remove the old empty visual frame feel */
+.feature--fullbleed .feature-visual{
+  display:none;
+}
+
+@media(max-width:620px){
+  .feature--fullbleed .feature-artwork{
+    padding:26px 14px 104px;
+  }
+}
+
+
+/* ===== V11 TRUE FULL-BLEED =====
+   01/02: artwork itself fills the card edge-to-edge.
+   Source image is preserved 100%; extra canvas is mirror-extended outside the original bounds.
+*/
+.features.features--overlay{
+  gap:14px;
+}
+.feature.feature--overlay{
+  aspect-ratio:1 / 1.18;
+}
+.feature--truefull .feature-visual--truefull{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:block;
+  overflow:hidden;
+  background:#0a423d;
+}
+.feature--truefull .feature-visual--truefull img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .75s cubic-bezier(.2,.8,.2,1);
+}
+.feature--truefull:hover .feature-visual--truefull img{
+  transform:scale(1.025);
+}
+.feature--truefull::after{
+  z-index:2;
+  background:
+    linear-gradient(180deg,
+      rgba(2,28,26,.00) 0%,
+      rgba(2,28,26,.00) 48%,
+      rgba(2,28,26,.22) 62%,
+      rgba(2,28,26,.82) 82%,
+      rgba(2,28,26,.96) 100%);
+}
+.feature--truefull .feature-index,
+.feature--truefull .feature-overlay{
+  z-index:4;
+}
+.feature--truefull .feature-overlay{
+  padding:74px 22px 22px;
+}
+
+/* Hide old v10 helper layers if any remain */
+.feature--truefull .feature-backdrop,
+.feature--truefull .feature-artwork{
+  display:none !important;
+}
+
+/* Keep block 03 on same visual rhythm */
+.feature--experience::after{
+  background:
+    linear-gradient(180deg,
+      rgba(2,28,26,.00) 0%,
+      rgba(2,28,26,.00) 48%,
+      rgba(2,28,26,.22) 62%,
+      rgba(2,28,26,.82) 82%,
+      rgba(2,28,26,.96) 100%);
+}
+
+@media(max-width:980px){
+  .feature.feature--overlay{
+    aspect-ratio:1 / 1.12;
+  }
+}
+@media(max-width:620px){
+  .feature.feature--overlay,
+  .feature.feature--overlay:nth-child(3){
+    aspect-ratio:1 / 1.08;
+  }
+  .feature--truefull .feature-overlay{
+    padding:62px 17px 17px;
+  }
+}
+
+
+/* ===== V12 block fine-tuning ===== */
+.feature--melamine .feature-visual--truefull img{
+  object-position:80% center;
+}
+.feature--surface .feature-visual--truefull img{
+  object-position:center center;
+}
+
 </style>
 </head>
 <body>
@@ -439,39 +972,40 @@ footer{padding:24px 18px;display:block;line-height:1.8}
       <p>SBOX được thiết kế như một material kit gọn gàng, tập hợp các mã màu Melamine mới nhất mùa 2026–2027 cùng hơn 30 hiệu ứng khuôn độc đáo của KES. Bộ mẫu hỗ trợ quá trình xem, so sánh và trao đổi vật liệu trực quan, giúp việc tư vấn trở nên rõ ràng, thuận tiện hơn.</p>
     </div>
 
-    <div class="features">
-      <article class="feature has-media feature--melamine">
-        <div class="feature-no">01</div>
-        <div class="feature-media" aria-label="Bảng màu Melamine KES">
-          <figure><img src="assets/melamine-palette-01.webp" alt="Bảng màu Melamine KES với nhiều mã ván phủ thời thượng" loading="lazy"></figure>
-          <figure><img src="assets/melamine-palette-02.webp" alt="Các mẫu bảng màu Melamine KES với sắc độ và cá tính thiết kế" loading="lazy"></figure>
+    <div class="features features--overlay">
+      <article class="feature feature--overlay feature--melamine feature--truefull">
+        <div class="feature-visual feature-visual--truefull">
+          <img src="assets/melamine-8-sac-do-full.webp" alt="Bộ sưu tập Melamine KES với 8 sắc độ và 8 cá tính thiết kế" loading="lazy">
         </div>
-        <div class="feature-body"><h3>Bảng màu Melamine 2026–2027</h3><p>Cập nhật những mã màu mới nhất, mở thêm lựa chọn cho nhiều phong cách không gian.</p></div>
+        <div class="feature-index">01</div>
+        <div class="feature-overlay">
+          <h3>Bảng màu Melamine 2026–2027</h3>
+          <p>Cập nhật những mã màu mới nhất, mở thêm lựa chọn cho nhiều phong cách không gian.</p>
+        </div>
       </article>
-      <article class="feature has-media feature--surface">
-        <div class="feature-no">02</div>
-        <div class="feature-media" aria-label="Hiệu ứng khuôn và chất liệu bề mặt KES">
-          <figure><img src="assets/surface-mold-01.webp" alt="Các nhóm hiệu ứng vật liệu KES theo chất liệu gỗ, vải và màu đơn sắc" loading="lazy"></figure>
-          <figure><img src="assets/surface-mold-02.webp" alt="Hơn 30 hiệu ứng khuôn bề mặt KES cho nhiều phong cách thiết kế" loading="lazy"></figure>
+
+      <article class="feature feature--overlay feature--surface feature--truefull">
+        <div class="feature-visual feature-visual--truefull">
+          <img src="assets/surface-30-plus-portrait.webp" alt="Hơn 30 bề mặt KES với các nhóm solid color, fabric, woodgrain và stone beton" loading="lazy">
         </div>
-        <div class="feature-body"><h3>Hơn 30 hiệu ứng khuôn từ KES</h3><p>Đa dạng bề mặt độc đáo, tạo thêm cảm hứng phối màu và vật liệu.</p></div>
+        <div class="feature-index">02</div>
+        <div class="feature-overlay">
+          <h3>Hơn 30 hiệu ứng khuôn từ KES</h3>
+          <p>Đa dạng bề mặt độc đáo, tạo thêm cảm hứng phối màu và vật liệu.</p>
+        </div>
       </article>
-      <article class="feature feature-experience">
-        <div class="experience-copy">
-          <div class="copy-text">
-            <h3>Trải nghiệm vật liệu trực quan</h3>
-            <p>Dễ xem, chạm, so sánh và trao đổi mẫu, giúp khách hàng hình dung rõ hơn phương án phù hợp.</p>
-          </div>
-          <div class="experience-index">03</div>
+
+      <article class="feature feature--overlay feature--experience">
+        <div class="feature-visual feature-visual--gallery">
+          <div class="overlay-shot"><img src="assets/experience-touch.webp" alt="Khách hàng trực tiếp chạm và xem mẫu vật liệu KES" loading="lazy"></div>
+          <div class="overlay-shot"><img src="assets/experience-compare.webp" alt="So sánh mẫu màu và bề mặt KES trong quá trình tư vấn" loading="lazy"></div>
+          <div class="overlay-shot"><img src="assets/experience-visualize.webp" alt="Trực quan hóa phương án nội thất cùng mẫu vật liệu KES" loading="lazy"></div>
+          <div class="overlay-shot"><img src="assets/experience-consult.webp" alt="Khách hàng trao đổi và lựa chọn vật liệu tại showroom KES" loading="lazy"></div>
         </div>
-        <div class="experience-gallery" aria-label="Trải nghiệm vật liệu KES">
-          <figure class="experience-shot"><img src="assets/experience-touch.webp" alt="Khách hàng trực tiếp chạm và xem mẫu vật liệu KES" loading="lazy"></figure>
-          <figure class="experience-shot"><img src="assets/experience-compare.webp" alt="So sánh mẫu màu và bề mặt KES trong quá trình tư vấn" loading="lazy"></figure>
-          <figure class="experience-shot"><img src="assets/experience-visualize.webp" alt="Trực quan hóa phương án nội thất cùng mẫu vật liệu KES" loading="lazy"></figure>
-          <figure class="experience-shot"><img src="assets/experience-consult.webp" alt="Khách hàng trao đổi và lựa chọn vật liệu tại showroom KES" loading="lazy"></figure>
-        </div>
-        <div class="experience-float" aria-hidden="true">
-          <img src="assets/experience-consult.webp" alt="">
+        <div class="feature-index">03</div>
+        <div class="feature-overlay">
+          <h3>Trải nghiệm vật liệu trực quan</h3>
+          <p>Dễ xem, chạm, so sánh và trao đổi mẫu, giúp khách hàng hình dung rõ hơn phương án phù hợp.</p>
         </div>
       </article>
     </div>
@@ -535,7 +1069,7 @@ footer{padding:24px 18px;display:block;line-height:1.8}
 </section>
 </main>
 
-<footer><span>KES · SBOX MATERIAL KIT</span><span>Landing page concept v4 ART · 2026</span></footer>
+<footer><span>KES · SBOX MATERIAL KIT</span><span>Landing page concept v12 BLOCK TWEAKS · 2026</span></footer>
 
 <script>
 const stage=document.getElementById('stage');
