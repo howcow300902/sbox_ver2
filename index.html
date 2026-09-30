@@ -923,6 +923,321 @@ footer{padding:24px 18px;display:block;line-height:1.8}
   object-position:center center;
 }
 
+
+/* ===== V14 MOBILE-FIRST UX/UI OVERRIDES ===== */
+:root{
+  --page-pad:clamp(18px,4vw,56px);
+}
+html{
+  scroll-padding-top:84px;
+}
+body{
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.shell{
+  width:min(1320px,100%);
+}
+
+/* Laptop / desktop polish */
+@media(min-width:981px){
+  .topbar{padding:24px var(--page-pad)}
+  .hero-grid{
+    grid-template-columns:.86fr 1.14fr;
+    gap:3vw;
+    padding:108px var(--page-pad) 70px;
+  }
+  .hero-copy{max-width:600px}
+  .hero h1{font-size:clamp(72px,7.4vw,128px)}
+  .hero p{max-width:530px;font-size:15px}
+  .stage{min-height:600px}
+  .sbox-visual{width:min(720px,53vw)}
+  .intro,.register{padding-left:var(--page-pad);padding-right:var(--page-pad)}
+  .intro-grid{gap:5vw}
+  .features.features--overlay{margin-top:48px}
+  .register-grid{grid-template-columns:.72fr 1.28fr;gap:5vw}
+  .form-card{padding:32px}
+}
+
+/* Tablet */
+@media(max-width:980px){
+  .hero{min-height:auto}
+  .hero-grid{
+    min-height:auto;
+    padding:100px 28px 52px;
+    gap:10px;
+  }
+  .hero-copy{max-width:680px}
+  .stage{min-height:470px}
+  .sbox-visual{width:min(650px,92vw)}
+  .intro,.register{padding-left:28px;padding-right:28px}
+  .features.features--overlay{grid-template-columns:1fr 1fr}
+  .feature.feature--overlay:nth-child(3){grid-column:1/-1}
+}
+
+/* Strong mobile optimization */
+@media(max-width:620px){
+  :root{--mobile-pad:16px}
+
+  html{scroll-padding-top:72px}
+  body{
+    padding-bottom:76px;
+    overflow-x:hidden;
+    background:#f7f3ea;
+  }
+
+  .topbar{
+    position:absolute;
+    padding:16px var(--mobile-pad);
+  }
+  .brand{
+    font-size:25px;
+    line-height:.9;
+  }
+  .brand small{
+    font-size:7px;
+    margin-top:2px;
+  }
+  .top-cta{display:none}
+
+  .hero{
+    min-height:auto;
+    padding:0;
+  }
+  .hero::after{
+    font-size:54vw;
+    right:-18vw;
+    bottom:4vw;
+  }
+  .hero-grid{
+    min-height:auto;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:2px;
+    padding:88px var(--mobile-pad) 34px;
+  }
+  .hero-copy{
+    max-width:none;
+    width:100%;
+  }
+  .eyebrow{
+    font-size:9px;
+    letter-spacing:.15em;
+    gap:8px;
+  }
+  .eyebrow::before{width:20px}
+  .hero h1{
+    margin-top:14px;
+    font-size:clamp(52px,16vw,70px);
+    line-height:.82;
+    letter-spacing:-.055em;
+  }
+  .hero p{
+    margin-top:18px;
+    max-width:34ch;
+    font-size:14px;
+    line-height:1.62;
+  }
+  .hero-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:22px;
+  }
+  .cta{
+    width:100%;
+    min-height:50px;
+    padding:0 12px;
+    font-size:9.5px;
+    letter-spacing:.07em;
+  }
+
+  .stage{
+    min-height:330px;
+    margin-top:4px;
+    overflow:visible;
+  }
+  .hero-glow{
+    width:340px;
+    height:340px;
+  }
+  .orbit{width:330px;height:330px}
+  .orbit.o2{width:270px;height:270px}
+  .sbox-visual{
+    width:118vw;
+    max-width:560px;
+    margin-left:-9vw;
+  }
+  .float-dot,.stage-note{display:none}
+
+  .intro{
+    padding:58px var(--mobile-pad) 62px;
+  }
+  .intro-grid{
+    display:block;
+  }
+  .intro h2,.register h2{
+    margin-top:12px;
+    font-size:clamp(46px,13vw,62px);
+    line-height:.88;
+  }
+  .intro-grid > p{
+    margin-top:20px;
+    font-size:13px;
+    line-height:1.7;
+  }
+  .intro-grid::after{display:none}
+
+  .features.features--overlay{
+    grid-template-columns:1fr;
+    gap:12px;
+    margin-top:30px;
+  }
+  .feature.feature--overlay,
+  .feature.feature--overlay:nth-child(3){
+    grid-column:auto;
+    aspect-ratio:1 / 1.08;
+    border-radius:22px;
+    box-shadow:0 12px 28px rgba(0,0,0,.12);
+  }
+  .feature.feature--overlay:hover{transform:none!important}
+  .feature-index{
+    top:14px;
+    left:15px;
+    font-size:44px;
+  }
+  .feature-overlay{
+    padding:52px 15px 15px!important;
+  }
+  .feature-overlay h3{
+    margin-bottom:5px;
+    font-size:16px;
+    line-height:1.25;
+  }
+  .feature-overlay p{
+    max-width:31ch;
+    font-size:10.5px!important;
+    line-height:1.45!important;
+  }
+  .feature--melamine .feature-visual--truefull img{
+    object-position:80% center;
+  }
+  .feature--surface .feature-visual--truefull img{
+    object-position:center center;
+  }
+  .feature-visual--gallery{
+    grid-template-columns:1.1fr .9fr;
+    grid-template-rows:1fr 1fr;
+  }
+  .overlay-shot:first-child{grid-row:1/3}
+  .overlay-shot:nth-child(4){display:none}
+
+  .register{
+    padding:58px var(--mobile-pad) 26px;
+  }
+  .register-grid{
+    display:block;
+  }
+  .register-copy{
+    position:static;
+    margin-bottom:26px;
+  }
+  .register-copy p{
+    margin-top:17px;
+    max-width:36ch;
+    font-size:13px;
+    line-height:1.68;
+  }
+  .form-card{
+    width:100%;
+    padding:22px 16px 18px;
+    border-radius:22px;
+    box-shadow:0 15px 40px rgba(9,47,43,.11);
+  }
+  .form-card:hover{transform:none}
+  .form-card h3{
+    margin-bottom:22px;
+    font-size:17px;
+  }
+  .fields{
+    grid-template-columns:1fr;
+    gap:15px;
+  }
+  .field.wide{grid-column:auto}
+  .field label{
+    margin-bottom:5px;
+    font-size:9.5px;
+    letter-spacing:.1em;
+  }
+  .field input,
+  .field select,
+  .field textarea{
+    min-height:48px;
+    padding:10px 0;
+    font-size:16px; /* prevents iOS input zoom */
+  }
+  .field textarea{
+    min-height:92px;
+  }
+  .consent{
+    gap:10px;
+    margin-top:20px;
+    font-size:11.5px;
+    line-height:1.48;
+  }
+  .consent input{
+    width:18px;
+    height:18px;
+    flex:0 0 18px;
+  }
+  .submit{
+    position:relative;
+    height:54px;
+    margin-top:22px;
+    font-size:11px;
+    letter-spacing:.1em;
+  }
+  .form-note{
+    margin-top:10px;
+    font-size:9.5px;
+  }
+
+  .mobile-sticky-cta{
+    position:fixed;
+    left:10px;
+    right:10px;
+    bottom:max(10px,env(safe-area-inset-bottom));
+    z-index:120;
+    min-height:56px;
+    padding:0 20px;
+    border-radius:999px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    color:#fff;
+    background:rgba(6,62,57,.96);
+    box-shadow:0 12px 34px rgba(0,0,0,.22);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+  }
+}
+
+@media(min-width:621px){
+  .mobile-sticky-cta{display:none}
+}
+
+
+/* ===== V15 CTA cleanup ===== */
+.mobile-sticky-cta{
+  justify-content:center !important;
+}
+
 </style>
 </head>
 <body>
@@ -956,10 +1271,9 @@ footer{padding:24px 18px;display:block;line-height:1.8}
       <h1>SBOX.<br><em>Chạm vật liệu.</em><br>Mở ý tưởng.</h1>
       <p>Cảm nhận màu sắc và bề mặt trực tiếp, khơi mở thêm những hướng sáng tạo cho không gian.</p>
       <div class="hero-actions">
-        <a class="cta primary" href="#register">Đăng ký nhận SBOX ↘</a>
+        <a class="cta primary" href="#register">Đăng ký nhận SBOX</a>
         <a class="cta secondary" href="#about">Khám phá SBOX</a>
       </div>
-      <div class="micro">FORM: kes-sbox-registration · Netlify Forms ready</div>
     </div>
 
     <div class="stage" id="stage" aria-label="KES SBOX">
@@ -1084,8 +1398,6 @@ footer{padding:24px 18px;display:block;line-height:1.8}
 </section>
 </main>
 
-<footer><span>KES · SBOX MATERIAL KIT</span><span>Landing page concept v13 NETLIFY FORM FIX · 2026</span></footer>
-
 <script>
 const stage=document.getElementById('stage');
 const sboxVisual=document.getElementById('sboxVisual');
@@ -1148,5 +1460,10 @@ if(nativeForm){
   });
 }
 </script>
+
+<a class="mobile-sticky-cta" href="#register" aria-label="Đăng ký nhận SBOX">
+  <span>Đăng ký nhận SBOX</span>
+</a>
+
 </body>
 </html>
