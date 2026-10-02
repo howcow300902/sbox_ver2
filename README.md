@@ -1,12 +1,9 @@
-KES SBOX Landing v19 — Scope Highlight
+KES SBOX Landing v21 — Vietnamese Success Page
 
-Update:
-- "TP.HCM (khu vực cũ)" -> "TP.HCM (địa giới cũ)"
-- Dòng phạm vi áp dụng được đổi sang highlight đỏ, chữ đậm để nổi bật hơn.
-
-Giữ nguyên:
-- District dropdown
-- Delivery window D+7 / D+14 / D+21 / D+28
-- Netlify Forms
-- GTM
-- Mobile-first UX
+- Form action đổi sang /success/
+- Trang cảm ơn tiếng Việt:
+  "KES cảm ơn Quý khách."
+  "Chúng tôi sẽ liên hệ trong thời gian sớm nhất."
+- Có nút "Quay lại trang chính"
+- Có cả success/index.html và success.html để deploy ổn định hơn trên Netlify.
+- Giữ nguyên Netlify Forms + GTM.
