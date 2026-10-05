@@ -1552,6 +1552,8 @@ body{
   display:none !important;
 }
 
+
+.step-kicker{display:none!important;}
 </style>
 </head>
 <body>
@@ -1708,7 +1710,6 @@ body{
         <!-- STEP 1 -->
         <section class="screen-step is-active" data-step="1">
           <div class="screen-step-head">
-            <div class="step-kicker">BƯỚC 01 / 03</div>
             <h4>Thông tin doanh nghiệp</h4>
             <p>Thông tin cơ bản để KES xác định nhóm đối tượng phù hợp với chương trình SBOX.</p>
           </div>
@@ -1765,7 +1766,6 @@ body{
         <!-- STEP 2 -->
         <section class="screen-step" data-step="2" hidden>
           <div class="screen-step-head">
-            <div class="step-kicker">BƯỚC 02 / 03</div>
             <h4>Năng lực doanh nghiệp / công ty</h4>
             <p>Thông tin này giúp KES xác định quy mô sử dụng vật liệu và mức độ phù hợp với SBOX.</p>
           </div>
@@ -1801,7 +1801,6 @@ body{
         <!-- STEP 3 -->
         <section class="screen-step" data-step="3" hidden>
           <div class="screen-step-head">
-            <div class="step-kicker">BƯỚC 03 / 03</div>
             <h4>Xác nhận thông tin nhận SBOX</h4>
             <p>Vui lòng cung cấp thông tin nhận hàng để KES thuận tiện xác nhận và giao bộ mẫu.</p>
           </div>
@@ -1969,58 +1968,26 @@ if(nativeForm){
     return true;
   }
 
-  async function submitToNetlify(redirectUrl, button){
-    if(button){
-      button.disabled=true;
-      button.textContent='ĐANG GỬI...';
-    }
-
-    try{
-      const formData=new FormData(nativeForm);
-      const body=new URLSearchParams();
-
-      for(const [key,value] of formData.entries()){
-        body.append(key,String(value));
-      }
-
-      const response=await fetch('/',{
-        method:'POST',
-        headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        body:body.toString()
-      });
-
-      if(!response.ok){
-        throw new Error(`Netlify submit failed: ${response.status}`);
-      }
-
-      window.location.assign(redirectUrl);
-    }catch(error){
-      console.error(error);
-
-      if(button){
-        button.disabled=false;
-        button.textContent=button.dataset.originalText || 'TIẾP TỤC';
-      }
-
-      alert('Chưa gửi được thông tin. Vui lòng thử lại.');
-    }
-  }
-
-  async function submitForReview(reason,stepLabel){
+  function submitForReview(reason,stepLabel){
     screeningStatus.value=reason;
     screeningStep.value=stepLabel;
+    nativeForm.setAttribute('action','/review/');
 
+    // Các field của bước sau không được tham gia validation/submission.
     setStepDisabled(3,true);
     if(stepLabel==='Bước 1'){
       setStepDisabled(2,true);
     }
 
     const activeButton = stepLabel==='Bước 1' ? step1Next : step2Next;
-    if(activeButton && !activeButton.dataset.originalText){
-      activeButton.dataset.originalText=activeButton.textContent;
+    if(activeButton){
+      activeButton.disabled=true;
+      activeButton.textContent='ĐANG GỬI...';
     }
 
-    await submitToNetlify('/review/',activeButton);
+    // Native POST thẳng cho Netlify Forms.
+    // submit() bỏ qua submit event cuối để đi trực tiếp tới /review/
+    HTMLFormElement.prototype.submit.call(nativeForm);
   }
 
   // Initialize: only Step 1 participates in validation/submission.
@@ -2065,26 +2032,34 @@ if(nativeForm){
     });
   });
 
-  nativeForm.addEventListener('submit',async e=>{
-    e.preventDefault();
-
+  nativeForm.addEventListener('submit',e=>{
     const step3=getStep(3);
     const step3Visible=step3 && !step3.hidden;
 
-    if(!step3Visible) return;
-    if(!validateStep(3)) return;
+    if(!step3Visible){
+      e.preventDefault();
+      return;
+    }
+
+    if(!validateStep(3)){
+      e.preventDefault();
+      return;
+    }
 
     screeningStatus.value='Đủ điều kiện nhận SBOX';
     screeningStep.value='Bước 3';
     qualifiedBusinessType.value='Đạt';
     qualifiedCapacity.value='Đạt';
 
+    nativeForm.setAttribute('action','/success/');
+
     const btn=step3.querySelector('.submit');
-    if(btn && !btn.dataset.originalText){
-      btn.dataset.originalText=btn.textContent;
+    if(btn){
+      btn.disabled=true;
+      btn.textContent='ĐANG GỬI...';
     }
 
-    await submitToNetlify('/success/',btn);
+    // KHÔNG preventDefault: browser POST native -> Netlify -> /success/
   });
 }
 
