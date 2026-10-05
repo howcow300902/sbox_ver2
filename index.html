@@ -1968,26 +1968,55 @@ if(nativeForm){
     return true;
   }
 
+  async function postToNetlifyAndGo(targetUrl,button){
+    if(button){
+      button.disabled=true;
+      button.dataset.originalText=button.dataset.originalText || button.textContent;
+      button.textContent='ĐANG GỬI...';
+    }
+
+    const formData=new FormData(nativeForm);
+    const encoded=new URLSearchParams(formData).toString();
+
+    try{
+      // Netlify's recommended AJAX format for static forms.
+      // Important: do NOT inspect response.ok here.
+      // Netlify may return a generic success response/page; we ignore its body
+      // and explicitly navigate to our own result page.
+      await fetch('/',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:encoded,
+        keepalive:true
+      });
+    }catch(error){
+      // Best-effort fallback so the visitor still reaches our custom HTML.
+      // A same-origin network failure is uncommon, but do not show Netlify's
+      // generic Thank You page or a browser alert.
+      try{
+        const payload=new Blob(
+          [encoded],
+          {type:'application/x-www-form-urlencoded;charset=UTF-8'}
+        );
+        navigator.sendBeacon('/',payload);
+      }catch(_){}
+    }finally{
+      window.location.replace(targetUrl);
+    }
+  }
+
   function submitForReview(reason,stepLabel){
     screeningStatus.value=reason;
     screeningStep.value=stepLabel;
-    nativeForm.setAttribute('action','/review/');
 
-    // Các field của bước sau không được tham gia validation/submission.
+    // Later-step fields must not be posted for an early screening exit.
     setStepDisabled(3,true);
     if(stepLabel==='Bước 1'){
       setStepDisabled(2,true);
     }
 
     const activeButton = stepLabel==='Bước 1' ? step1Next : step2Next;
-    if(activeButton){
-      activeButton.disabled=true;
-      activeButton.textContent='ĐANG GỬI...';
-    }
-
-    // Native POST thẳng cho Netlify Forms.
-    // submit() bỏ qua submit event cuối để đi trực tiếp tới /review/
-    HTMLFormElement.prototype.submit.call(nativeForm);
+    postToNetlifyAndGo('/review/',activeButton);
   }
 
   // Initialize: only Step 1 participates in validation/submission.
@@ -2033,33 +2062,21 @@ if(nativeForm){
   });
 
   nativeForm.addEventListener('submit',e=>{
+    e.preventDefault();
+
     const step3=getStep(3);
     const step3Visible=step3 && !step3.hidden;
 
-    if(!step3Visible){
-      e.preventDefault();
-      return;
-    }
-
-    if(!validateStep(3)){
-      e.preventDefault();
-      return;
-    }
+    if(!step3Visible) return;
+    if(!validateStep(3)) return;
 
     screeningStatus.value='Đủ điều kiện nhận SBOX';
     screeningStep.value='Bước 3';
     qualifiedBusinessType.value='Đạt';
     qualifiedCapacity.value='Đạt';
 
-    nativeForm.setAttribute('action','/success/');
-
     const btn=step3.querySelector('.submit');
-    if(btn){
-      btn.disabled=true;
-      btn.textContent='ĐANG GỬI...';
-    }
-
-    // KHÔNG preventDefault: browser POST native -> Netlify -> /success/
+    postToNetlifyAndGo('/success/',btn);
   });
 }
 

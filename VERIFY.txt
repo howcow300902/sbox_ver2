@@ -1,5 +1,6 @@
-contains_fetch: False
-contains_alert_error: False
-contains_submitToNetlify: False
-review_native_submit: True
-success_action: True
+has_custom_ajax: True
+has_response_ok_check: True
+has_native_form_submit: False
+has_error_alert: False
+review_redirect: True
+success_redirect: True

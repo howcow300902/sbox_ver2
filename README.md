@@ -1,21 +1,18 @@
-KES SBOX Landing v28 — REDIRECT REAL FIX
+KES SBOX Landing v30 — Custom Result Page via Netlify AJAX
 
-Lỗi tìm thấy:
-- Trong v27 thực tế VẪN còn submitToNetlify(), fetch('/') và alert
-  "Chưa gửi được thông tin. Vui lòng thử lại."
-- Vì vậy browser vẫn chạy AJAX cũ và báo lỗi.
+Fix chính:
+- Không dùng native form redirect nữa, vì Netlify đang đưa user về generic "Thank you!".
+- Submit lead bằng AJAX đúng format Netlify:
+  POST /
+  Content-Type: application/x-www-form-urlencoded
+  body: URLSearchParams(FormData)
+- Sau khi request hoàn tất, JS chủ động chuyển:
+  + Không đạt -> /review/
+  + Đạt -> /success/
+- Không kiểm tra response.ok, nên generic response/status của Netlify không chặn redirect custom.
+- Không hiện alert lỗi cho người dùng.
+- Có sendBeacon fallback nếu fetch gặp network error.
+- success/index.html và review/index.html vẫn nằm trong package.
 
-v28 đã:
-- Xóa hoàn toàn fetch/AJAX và alert lỗi.
-- Hồ sơ chưa đạt -> native POST Netlify -> /review/
-- Hồ sơ đạt -> native POST Netlify -> /success/
-- Có success/index.html + review/index.html + _redirects.
-- VERIFY.txt phải cho:
-  contains_fetch: False
-  contains_alert_error: False
-  contains_submitToNetlify: False
-
-QUAN TRỌNG:
-Deploy toàn bộ nội dung của folder này.
-Nếu upload ZIP trực tiếp, dùng file ROOT_READY.zip vì index.html nằm ngay root ZIP.
-Sau deploy mở tab ẩn danh hoặc hard refresh.
+Deploy nguyên ROOT_READY.zip lên Netlify.
+Sau deploy test bằng tab ẩn danh.
