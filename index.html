@@ -1332,6 +1332,220 @@ body{
   }
 }
 
+
+/* ===== V22 — 3 STEP SCREENING FORM ===== */
+.form-card--screening{
+  overflow:hidden;
+}
+.form-head-sub{
+  margin-top:6px;
+  color:rgba(18,48,44,.52);
+  font-size:11px;
+  line-height:1.5;
+}
+.stepper{
+  display:grid;
+  grid-template-columns:auto 1fr auto 1fr auto;
+  align-items:center;
+  gap:9px;
+  margin:0 0 30px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(11,92,85,.045);
+  border:1px solid rgba(11,92,85,.08);
+}
+.stepper-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:rgba(18,48,44,.36);
+  transition:color .25s ease;
+}
+.stepper-item span{
+  width:31px;height:31px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  border:1px solid rgba(18,48,44,.14);
+  font-size:10px;
+  font-weight:800;
+  background:#fff;
+}
+.stepper-item small{
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.stepper-item.is-active,
+.stepper-item.is-done{
+  color:var(--kes);
+}
+.stepper-item.is-active span{
+  color:#fff;
+  border-color:var(--kes);
+  background:var(--kes);
+  box-shadow:0 6px 18px rgba(11,92,85,.16);
+}
+.stepper-item.is-done span{
+  color:var(--kes);
+  border-color:rgba(11,92,85,.25);
+  background:rgba(131,234,220,.24);
+}
+.stepper-line{
+  height:1px;
+  background:rgba(18,48,44,.12);
+}
+.screen-step{
+  animation:stepFade .28s ease both;
+}
+.screen-step[hidden]{
+  display:none !important;
+}
+@keyframes stepFade{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.screen-step-head{
+  margin-bottom:24px;
+}
+.step-kicker{
+  margin-bottom:7px;
+  color:var(--kes);
+  font-size:9px;
+  line-height:1;
+  letter-spacing:.16em;
+  font-weight:800;
+}
+.screen-step-head h4{
+  margin:0;
+  color:var(--ink);
+  font-size:24px;
+  line-height:1.15;
+  letter-spacing:-.02em;
+}
+.screen-step-head p{
+  max-width:610px;
+  margin:9px 0 0;
+  color:rgba(18,48,44,.52);
+  font-size:12px;
+  line-height:1.65;
+}
+.optional-label{
+  color:rgba(18,48,44,.34);
+  font-weight:500;
+  text-transform:none;
+  letter-spacing:0;
+}
+.screen-note{
+  margin-top:20px;
+  padding:12px 14px;
+  border-radius:14px;
+  color:rgba(18,48,44,.65);
+  background:rgba(11,92,85,.055);
+  border:1px solid rgba(11,92,85,.09);
+  font-size:11px;
+  line-height:1.55;
+}
+.screen-actions{
+  display:grid;
+  grid-template-columns:132px 1fr;
+  gap:10px;
+  margin-top:24px;
+}
+.screen-actions--end{
+  grid-template-columns:1fr;
+}
+.screen-next,
+.screen-back,
+.screen-actions .submit{
+  min-height:54px;
+  border-radius:999px;
+  cursor:pointer;
+  font-size:10.5px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.screen-next,
+.screen-actions .submit{
+  border:0;
+  background:var(--kes);
+  color:#fff;
+}
+.screen-back{
+  border:1px solid rgba(18,48,44,.15);
+  color:var(--ink);
+  background:#fff;
+}
+.screen-actions .submit{
+  width:100%;
+  height:auto;
+  margin:0;
+}
+.screen-next:disabled,
+.screen-back:disabled,
+.screen-actions .submit:disabled{
+  opacity:.55;
+  cursor:wait;
+}
+
+@media(max-width:620px){
+  .form-card--screening{
+    padding:20px 14px 16px;
+  }
+  .form-head-row{
+    margin-bottom:16px;
+  }
+  .form-head-sub{
+    font-size:10.5px;
+  }
+  .stepper{
+    margin-bottom:24px;
+    padding:11px 10px;
+    gap:6px;
+    border-radius:15px;
+  }
+  .stepper-item{
+    gap:0;
+  }
+  .stepper-item span{
+    width:30px;height:30px;
+    font-size:9px;
+  }
+  .stepper-item small{
+    display:none;
+  }
+  .screen-step-head{
+    margin-bottom:20px;
+  }
+  .screen-step-head h4{
+    font-size:21px;
+  }
+  .screen-step-head p{
+    font-size:11.5px;
+  }
+  .screen-note{
+    margin-top:17px;
+    padding:11px 12px;
+    font-size:10.5px;
+  }
+  .screen-actions{
+    grid-template-columns:104px 1fr;
+    gap:8px;
+    margin-top:20px;
+  }
+  .screen-actions--end{
+    grid-template-columns:1fr;
+  }
+  .screen-next,
+  .screen-back,
+  .screen-actions .submit{
+    min-height:52px;
+    font-size:10px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1340,21 +1554,26 @@ body{
 <form name="kes-sbox-registration" data-netlify="true" netlify-honeypot="bot-field" hidden>
   <input type="hidden" name="form-name" value="kes-sbox-registration">
   <input name="bot-field">
-  <input name="full_name">
+
+  <input name="contact_name">
   <input name="phone">
   <input name="email">
-  <input name="organization">
+  <input name="company_name">
   <input name="business_type">
-  <input name="design_team_size">
   <input name="region">
-  <input name="district">
-  <input name="street_address">
+
+  <input name="company_capacity">
+  <input name="kes_usage">
+
   <input name="receiver_name">
   <input name="receiver_phone">
-  <input name="uses_kes_products">
-  <input name="company_capacity">
-  <input name="delivery_window">
-  <input name="consent">
+  <input name="delivery_address">
+  <input name="google_map_url">
+
+  <input name="screening_status">
+  <input name="screening_step">
+  <input name="qualified_business_type">
+  <input name="qualified_capacity">
 </form>
 
 <main>
@@ -1444,131 +1663,180 @@ body{
   <div class="shell register-grid">
     <div class="register-copy">
       <div class="eyebrow">03 — ĐĂNG KÝ</div>
-      <h2>Để SBOX<br><em>đến đúng người.</em></h2>
-      <p>Để lại thông tin và nhu cầu sử dụng để KES liên hệ xác nhận, giúp SBOX đồng hành cùng Quý Đối tác khi tư vấn vật liệu cho khách hàng.</p>
+      <h2>Để SBOX<br><em>đến đúng đối tượng.</em></h2>
+      <p>Form đăng ký được chia thành 3 bước sàng lọc ngắn gọn. KES sẽ ghi nhận thông tin và xác nhận mức độ phù hợp trước khi cấp SBOX.</p>
     </div>
 
-    <div class="form-card">
-      <form id="sboxForm" name="kes-sbox-registration" method="POST" action="/success/" data-netlify="true" netlify-honeypot="bot-field">
+    <div class="form-card form-card--screening">
+      <form id="sboxForm" name="kes-sbox-registration" method="POST" action="/success.html" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="kes-sbox-registration">
         <p style="display:none"><label>Không điền: <input name="bot-field"></label></p>
 
+        <input type="hidden" name="screening_status" id="screeningStatus" value="Đang sàng lọc">
+        <input type="hidden" name="screening_step" id="screeningStep" value="Bước 1">
+        <input type="hidden" name="qualified_business_type" id="qualifiedBusinessType" value="">
+        <input type="hidden" name="qualified_capacity" id="qualifiedCapacity" value="">
+
         <div class="form-head-row">
-          <h3>Thông tin đăng ký SBOX</h3>
+          <div>
+            <h3>Đăng ký nhận SBOX</h3>
+            <div class="form-head-sub">Hoàn tất theo từng bước để KES xác nhận mức độ phù hợp.</div>
+          </div>
           <div class="form-scope">Chỉ áp dụng: TP.HCM (địa giới cũ) &amp; Hà Nội</div>
         </div>
 
-        <div class="fields">
-          <div class="field">
-            <label>Họ và tên *</label>
-            <input name="full_name" required autocomplete="name" placeholder="Nguyễn Văn A">
+        <div class="stepper" aria-label="Tiến trình đăng ký">
+          <div class="stepper-item is-active" data-step-indicator="1">
+            <span>01</span><small>Thông tin</small>
           </div>
-
-          <div class="field">
-            <label>Số điện thoại có sử dụng Zalo *</label>
-            <input name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="09xx xxx xxx">
+          <div class="stepper-line"></div>
+          <div class="stepper-item" data-step-indicator="2">
+            <span>02</span><small>Năng lực</small>
           </div>
-
-          <div class="field wide">
-            <label>Email liên hệ *</label>
-            <input name="email" type="email" required autocomplete="email" inputmode="email" placeholder="email@company.com">
-          </div>
-
-          <div class="field wide">
-            <label>Doanh nghiệp / Đơn vị *</label>
-            <input name="organization" required autocomplete="organization" placeholder="Tên công ty / showroom / cửa hàng / xưởng / đơn vị">
-          </div>
-
-          <div class="field">
-            <label>Loại hình doanh nghiệp *</label>
-            <select name="business_type" id="businessType" required>
-              <option value="">Chọn loại hình doanh nghiệp</option>
-              <option value="Showroom vật liệu nội thất">Showroom vật liệu nội thất</option>
-              <option value="Cửa hàng ván gỗ công nghiệp">Cửa hàng ván gỗ công nghiệp</option>
-              <option value="Cửa hàng phụ kiện ngành gỗ công nghiệp">Cửa hàng phụ kiện ngành gỗ công nghiệp</option>
-              <option value="Xưởng sản xuất nội thất">Xưởng sản xuất nội thất</option>
-              <option value="Đơn vị thiết kế nội thất">Đơn vị thiết kế nội thất</option>
-              <option value="Đơn vị thiết kế và thi công nội thất">Đơn vị thiết kế và thi công nội thất</option>
-              <option value="Nhà thầu/đội thi công">Nhà thầu/đội thi công</option>
-              <option value="Khác">Khác</option>
-            </select>
-          </div>
-
-          <div class="field conditional-field" id="designTeamField" hidden>
-            <label>Số lượng Designer trong công ty *</label>
-            <input name="design_team_size" id="designTeamSize" type="number" min="1" inputmode="numeric" placeholder="VD: 5">
-          </div>
-
-          <div class="field">
-            <label>Khu vực nhận SBOX *</label>
-            <select name="region" id="regionSelect" required>
-              <option value="">Chọn khu vực</option>
-              <option value="TP.HCM (địa giới cũ)">TP.HCM (địa giới cũ)</option>
-              <option value="Hà Nội">Hà Nội</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label>Quận *</label>
-            <select name="district" id="districtSelect" required disabled>
-              <option value="">Chọn khu vực trước</option>
-            </select>
-          </div>
-
-          <div class="field wide">
-            <label>Địa chỉ chi tiết (đường, số nhà) *</label>
-            <input name="street_address" required autocomplete="street-address" placeholder="Số nhà, tên đường...">
-          </div>
-
-          <div class="field">
-            <label>Tên người nhận *</label>
-            <input name="receiver_name" required placeholder="Họ và tên người nhận">
-          </div>
-
-          <div class="field">
-            <label>SĐT người nhận *</label>
-            <input name="receiver_phone" type="tel" required inputmode="tel" placeholder="09xx xxx xxx">
-          </div>
-
-          <div class="field wide">
-            <label>Anh/Chị có sử dụng sản phẩm KES không? *</label>
-            <select name="uses_kes_products" required>
-              <option value="">Chọn câu trả lời</option>
-              <option value="Có">Có</option>
-              <option value="Chưa">Chưa</option>
-              <option value="Đã từng sử dụng">Đã từng sử dụng</option>
-            </select>
-          </div>
-
-          <div class="field wide">
-            <label>Năng lực doanh nghiệp *</label>
-            <input name="company_capacity" required placeholder="Sản lượng/tháng hoặc doanh thu/tháng — VD: 1 triệu tấm/tháng">
-            <small class="field-help">Có thể nhập sản lượng/tháng hoặc doanh thu trung bình/tháng.</small>
-          </div>
-
-          <div class="field wide">
-            <label>Thời gian mong muốn nhận hàng *</label>
-            <select name="delivery_window" id="deliveryWindow" required>
-              <option value="">Chọn thời gian mong muốn</option>
-              <option value="D+7">Trong vòng 1 tuần — D+7</option>
-              <option value="D+14">Trong vòng 2 tuần — D+14</option>
-              <option value="D+21">Trong vòng 3 tuần — D+21</option>
-              <option value="D+28">Trong vòng 4 tuần — D+28</option>
-            </select>
-            <small class="field-help">Thời gian được tính từ ngày gửi form đăng ký.</small>
+          <div class="stepper-line"></div>
+          <div class="stepper-item" data-step-indicator="3">
+            <span>03</span><small>Nhận SBOX</small>
           </div>
         </div>
 
-        <label class="consent"><input type="checkbox" name="consent" value="yes" required><span>Tôi đồng ý để KES liên hệ xác nhận thông tin đăng ký và việc cấp SBOX.</span></label>
-        <button class="submit" type="submit">Gửi đăng ký SBOX</button>
-        
-      </form>
+        <!-- STEP 1 -->
+        <section class="screen-step is-active" data-step="1">
+          <div class="screen-step-head">
+            <div class="step-kicker">BƯỚC 01 / 03</div>
+            <h4>Thông tin doanh nghiệp</h4>
+            <p>Thông tin cơ bản để KES xác định nhóm đối tượng phù hợp với chương trình SBOX.</p>
+          </div>
 
-      <div class="success" id="success">
-        <div class="check">✓</div>
-        <h3>Đã nhận đăng ký.</h3>
-        <p>Thông tin SBOX đã được ghi nhận. KES có thể liên hệ lại để xác nhận thông tin trước khi cấp bộ mẫu.</p>
-      </div>
+          <div class="fields">
+            <div class="field">
+              <label>Họ và tên người liên hệ *</label>
+              <input name="contact_name" required autocomplete="name" placeholder="Nguyễn Văn A">
+            </div>
+
+            <div class="field">
+              <label>Số điện thoại sử dụng Zalo *</label>
+              <input name="phone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="09xx xxx xxx">
+            </div>
+
+            <div class="field wide">
+              <label>Email <span class="optional-label">(nếu có)</span></label>
+              <input name="email" type="email" autocomplete="email" inputmode="email" placeholder="email@company.com">
+            </div>
+
+            <div class="field wide">
+              <label>Tên doanh nghiệp / công ty *</label>
+              <input name="company_name" required autocomplete="organization" placeholder="Tên doanh nghiệp / công ty">
+            </div>
+
+            <div class="field wide">
+              <label>Loại hình kinh doanh *</label>
+              <select name="business_type" id="businessType" required>
+                <option value="">Chọn loại hình kinh doanh</option>
+                <option value="Đơn vị thiết kế">Đơn vị thiết kế</option>
+                <option value="Đơn vị thiết kế - thi công">Đơn vị thiết kế - thi công</option>
+                <option value="Kiến trúc sư">Kiến trúc sư</option>
+                <option value="Thương mại">Thương mại</option>
+                <option value="Xưởng thi công">Xưởng thi công</option>
+                <option value="Nhà thầu/đội thi công">Nhà thầu/đội thi công</option>
+              </select>
+            </div>
+
+            <div class="field wide">
+              <label>Khu vực *</label>
+              <select name="region" required>
+                <option value="">Chọn khu vực</option>
+                <option value="TP.HCM (địa giới cũ)">TP.HCM (địa giới cũ)</option>
+                <option value="Hà Nội">Hà Nội</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="screen-note">
+            Hồ sơ chưa phù hợp vẫn được KES ghi nhận và sẽ được liên hệ, phản hồi sau.
+          </div>
+
+          <div class="screen-actions screen-actions--end">
+            <button class="screen-next" type="button" id="step1Next">Tiếp tục</button>
+          </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section class="screen-step" data-step="2" hidden>
+          <div class="screen-step-head">
+            <div class="step-kicker">BƯỚC 02 / 03</div>
+            <h4>Năng lực doanh nghiệp / công ty</h4>
+            <p>Thông tin này giúp KES xác định quy mô sử dụng vật liệu và mức độ phù hợp với SBOX.</p>
+          </div>
+
+          <div class="fields">
+            <div class="field wide">
+              <label>Năng lực doanh nghiệp *</label>
+              <select name="company_capacity" id="companyCapacity" required>
+                <option value="">Chọn sản lượng trung bình / tháng</option>
+                <option value="Dưới 200 tấm / tháng">Dưới 200 tấm / tháng</option>
+                <option value="Từ 200 đến dưới 500 tấm / tháng">Từ 200 đến dưới 500 tấm / tháng</option>
+                <option value="Từ 500 tấm / tháng trở lên">Từ 500 tấm / tháng trở lên</option>
+              </select>
+            </div>
+
+            <div class="field wide">
+              <label>Anh/Chị đã sử dụng sản phẩm KES chưa? *</label>
+              <select name="kes_usage" required>
+                <option value="">Chọn tình trạng sử dụng</option>
+                <option value="Đã và đang sử dụng thường xuyên">Đã và đang sử dụng thường xuyên</option>
+                <option value="Đã sử dụng">Đã sử dụng</option>
+                <option value="Chưa từng sử dụng">Chưa từng sử dụng</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="screen-note">
+            Bước xác nhận nhận SBOX dành cho doanh nghiệp có năng lực từ 500 tấm/tháng trở lên.
+          </div>
+
+          <div class="screen-actions">
+            <button class="screen-back" type="button" data-go-back="1">Quay lại</button>
+            <button class="screen-next" type="button" id="step2Next">Tiếp tục</button>
+          </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section class="screen-step" data-step="3" hidden>
+          <div class="screen-step-head">
+            <div class="step-kicker">BƯỚC 03 / 03</div>
+            <h4>Xác nhận thông tin nhận SBOX</h4>
+            <p>Vui lòng cung cấp thông tin nhận hàng để KES thuận tiện xác nhận và giao bộ mẫu.</p>
+          </div>
+
+          <div class="fields">
+            <div class="field">
+              <label>Tên người nhận *</label>
+              <input name="receiver_name" required placeholder="Họ và tên người nhận">
+            </div>
+
+            <div class="field">
+              <label>Số điện thoại người nhận *</label>
+              <input name="receiver_phone" type="tel" required inputmode="tel" placeholder="09xx xxx xxx">
+            </div>
+
+            <div class="field wide">
+              <label>Địa chỉ nhận hàng *</label>
+              <textarea name="delivery_address" required placeholder="Số nhà, tên đường, phường/xã, quận/huyện..."></textarea>
+            </div>
+
+            <div class="field wide">
+              <label>Ghim Google Maps <span class="optional-label">(nếu có)</span></label>
+              <input name="google_map_url" type="url" inputmode="url" placeholder="https://maps.google.com/...">
+              <small class="field-help">Dán liên kết vị trí Google Maps để KES dễ xác định điểm giao hàng.</small>
+            </div>
+          </div>
+
+          <div class="screen-actions">
+            <button class="screen-back" type="button" data-go-back="2">Quay lại</button>
+            <button class="submit" type="submit">Xác nhận đăng ký</button>
+          </div>
+        </section>
+      </form>
     </div>
   </div>
 </section>
@@ -1626,83 +1894,167 @@ if('IntersectionObserver' in window && !reduceMotion){
 }
 
 const nativeForm=document.getElementById('sboxForm');
+
 if(nativeForm){
-  nativeForm.addEventListener('submit',()=>{
-    const btn=nativeForm.querySelector('.submit');
-    if(btn){
-      btn.disabled=true;
-      btn.textContent='ĐANG GỬI...';
+  const screeningStatus=document.getElementById('screeningStatus');
+  const screeningStep=document.getElementById('screeningStep');
+  const qualifiedBusinessType=document.getElementById('qualifiedBusinessType');
+  const qualifiedCapacity=document.getElementById('qualifiedCapacity');
+
+  const businessType=document.getElementById('businessType');
+  const companyCapacity=document.getElementById('companyCapacity');
+
+  const step1Next=document.getElementById('step1Next');
+  const step2Next=document.getElementById('step2Next');
+
+  const eligibleBusinessTypes=new Set([
+    'Kiến trúc sư',
+    'Đơn vị thiết kế',
+    'Đơn vị thiết kế - thi công',
+    'Thương mại'
+  ]);
+
+  const steps=[1,2,3];
+
+  function getStep(step){
+    return nativeForm.querySelector(`.screen-step[data-step="${step}"]`);
+  }
+
+  function setStepDisabled(step,disabled){
+    const section=getStep(step);
+    if(!section) return;
+    section.querySelectorAll('input,select,textarea,button').forEach(el=>{
+      if(el.matches('[data-go-back]')) return;
+      el.disabled=disabled;
+    });
+  }
+
+  function updateStepper(activeStep){
+    nativeForm.querySelectorAll('[data-step-indicator]').forEach(item=>{
+      const step=Number(item.dataset.stepIndicator);
+      item.classList.toggle('is-active',step===activeStep);
+      item.classList.toggle('is-done',step<activeStep);
+    });
+  }
+
+  function showStep(step){
+    steps.forEach(num=>{
+      const section=getStep(num);
+      if(!section) return;
+      const active=num===step;
+      section.hidden=!active;
+      section.classList.toggle('is-active',active);
+      if(active) setStepDisabled(num,false);
+    });
+
+    screeningStep.value=`Bước ${step}`;
+    updateStepper(step);
+
+    const card=nativeForm.closest('.form-card');
+    if(card && window.innerWidth<=620){
+      const y=card.getBoundingClientRect().top+window.scrollY-14;
+      window.scrollTo({top:y,behavior:'smooth'});
+    }
+  }
+
+  function validateStep(step){
+    const section=getStep(step);
+    if(!section) return false;
+
+    const fields=[...section.querySelectorAll('input,select,textarea')].filter(el=>!el.disabled);
+    for(const field of fields){
+      if(!field.checkValidity()){
+        field.reportValidity();
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function submitForReview(reason,stepLabel){
+    screeningStatus.value=reason;
+    screeningStep.value=stepLabel;
+    nativeForm.action='/review.html';
+
+    setStepDisabled(3,true);
+    if(stepLabel==='Bước 1'){
+      setStepDisabled(2,true);
+    }
+
+    const activeButton = stepLabel==='Bước 1' ? step1Next : step2Next;
+    if(activeButton){
+      activeButton.disabled=true;
+      activeButton.textContent='ĐANG GỬI...';
+    }
+
+    nativeForm.requestSubmit();
+  }
+
+  // Initialize: only Step 1 participates in validation/submission.
+  setStepDisabled(2,true);
+  setStepDisabled(3,true);
+  showStep(1);
+
+  step1Next?.addEventListener('click',()=>{
+    if(!validateStep(1)) return;
+
+    const eligible=eligibleBusinessTypes.has(businessType.value);
+    qualifiedBusinessType.value=eligible ? 'Đạt' : 'Không đạt';
+
+    if(!eligible){
+      submitForReview('Không đạt điều kiện loại hình kinh doanh','Bước 1');
+      return;
+    }
+
+    screeningStatus.value='Đạt bước 1';
+    showStep(2);
+  });
+
+  step2Next?.addEventListener('click',()=>{
+    if(!validateStep(2)) return;
+
+    const eligible=companyCapacity.value==='Từ 500 tấm / tháng trở lên';
+    qualifiedCapacity.value=eligible ? 'Đạt' : 'Không đạt';
+
+    if(!eligible){
+      submitForReview('Không đạt điều kiện năng lực doanh nghiệp','Bước 2');
+      return;
+    }
+
+    screeningStatus.value='Đạt bước 2';
+    showStep(3);
+  });
+
+  nativeForm.querySelectorAll('[data-go-back]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const target=Number(btn.dataset.goBack);
+      showStep(target);
+    });
+  });
+
+  nativeForm.addEventListener('submit',e=>{
+    const step3=getStep(3);
+    const step3Visible=step3 && !step3.hidden;
+
+    // Final qualified submission
+    if(step3Visible){
+      if(!validateStep(3)){
+        e.preventDefault();
+        return;
+      }
+      screeningStatus.value='Đủ điều kiện nhận SBOX';
+      screeningStep.value='Bước 3';
+      qualifiedBusinessType.value='Đạt';
+      qualifiedCapacity.value='Đạt';
+      nativeForm.action='/success.html';
+
+      const btn=step3.querySelector('.submit');
+      if(btn){
+        btn.disabled=true;
+        btn.textContent='ĐANG GỬI...';
+      }
     }
   });
-}
-
-// Region -> district dropdown
-const regionSelect = document.getElementById('regionSelect');
-const districtSelect = document.getElementById('districtSelect');
-
-const districtOptions = {
-  'TP.HCM (địa giới cũ)': [
-    'Quận 1',
-    'Quận 3',
-    'Quận 4',
-    'Quận 5',
-    'Quận 6',
-    'Quận 7',
-    'Quận 8',
-    'Quận 10',
-    'Quận 11',
-    'Quận 12',
-    'Bình Tân',
-    'Bình Thạnh',
-    'Gò Vấp',
-    'Phú Nhuận',
-    'Tân Bình',
-    'Tân Phú',
-    'TP Thủ Đức (Quận 2 / Quận 9 / Thủ Đức cũ)'
-  ],
-  'Hà Nội': [
-    'Ba Đình',
-    'Bắc Từ Liêm',
-    'Cầu Giấy',
-    'Đống Đa',
-    'Hà Đông',
-    'Hai Bà Trưng',
-    'Hoàn Kiếm',
-    'Hoàng Mai',
-    'Long Biên',
-    'Nam Từ Liêm',
-    'Tây Hồ',
-    'Thanh Xuân'
-  ]
-};
-
-function syncDistricts(){
-  if(!regionSelect || !districtSelect) return;
-
-  const region = regionSelect.value;
-  const districts = districtOptions[region] || [];
-
-  districtSelect.innerHTML = '';
-
-  const first = document.createElement('option');
-  first.value = '';
-  first.textContent = region ? 'Chọn quận' : 'Chọn khu vực trước';
-  districtSelect.appendChild(first);
-
-  districts.forEach(district => {
-    const option = document.createElement('option');
-    option.value = district;
-    option.textContent = district;
-    districtSelect.appendChild(option);
-  });
-
-  districtSelect.disabled = !region;
-  districtSelect.value = '';
-}
-
-if(regionSelect){
-  regionSelect.addEventListener('change', syncDistricts);
-  syncDistricts();
 }
 
 </script>
