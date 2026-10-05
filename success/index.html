@@ -3,31 +3,211 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#063e39">
-<title>Đăng ký SBOX thành công | KES</title>
+<meta name="theme-color" content="#f3efe4">
+<title>Thông tin đã được ghi nhận | KES SBOX</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Display:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:18px;font-family:"DM Sans",sans-serif;background:#063e39;color:#fffdf8}
-.card{width:min(620px,100%);padding:46px 24px;border-radius:28px;text-align:center;border:1px solid rgba(255,255,255,.14);background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025))}
-.check{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;margin:0 auto 20px;background:#83eadc;color:#063e39;font-size:29px;font-weight:700}
-h1{margin:0;font-family:"Noto Serif Display",Georgia,serif;font-size:clamp(40px,9vw,64px);font-weight:500;line-height:1}
-p{max-width:460px;margin:18px auto 0;color:rgba(255,255,255,.68);font-size:14px;line-height:1.7}
-a{display:inline-flex;align-items:center;justify-content:center;min-height:52px;margin-top:28px;padding:0 22px;border-radius:999px;background:#83eadc;color:#063e39;text-decoration:none;font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
-@media(max-width:620px){.card{padding:38px 18px;border-radius:22px}a{width:100%}}
+:root{
+  --ink:#0b3f39;
+  --teal:#0d6b61;
+  --mint:#dfeae7;
+  --paper:#f3efe4;
+  --white:#ffffff;
+  --muted:#73837f;
+  --line:#dbe3df;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:clamp(16px,3vw,36px);
+  font-family:"DM Sans",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 12% 8%,rgba(13,107,97,.06),transparent 26rem),
+    linear-gradient(180deg,#f6f2e8 0%,var(--paper) 100%);
+}
+.result-card{
+  position:relative;
+  isolation:isolate;
+  width:min(1120px,100%);
+  min-height:min(720px,calc(100svh - 48px));
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+  padding:clamp(34px,6vw,78px);
+  border:1px solid rgba(11,63,57,.14);
+  border-radius:clamp(28px,4vw,44px);
+  background:rgba(255,255,255,.94);
+  box-shadow:0 32px 90px rgba(41,52,47,.08);
+}
+.result-card::after{
+  content:"SBOX";
+  position:absolute;
+  right:-.08em;
+  bottom:-.28em;
+  z-index:-1;
+  font-family:"Noto Serif Display",Georgia,serif;
+  font-size:clamp(150px,24vw,330px);
+  font-weight:500;
+  line-height:1;
+  letter-spacing:-.07em;
+  color:rgba(13,107,97,.038);
+  pointer-events:none;
+}
+.topline{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:13px;
+  min-width:0;
+}
+.check{
+  flex:0 0 auto;
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:var(--mint);
+  color:var(--teal);
+  font-size:24px;
+  font-weight:700;
+}
+.kicker{
+  font-size:11px;
+  font-weight:700;
+  line-height:1.3;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--teal);
+}
+.index{
+  color:#9ba7a3;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.content{
+  max-width:900px;
+  margin:clamp(54px,8vw,100px) 0 clamp(48px,7vw,86px);
+}
+h1{
+  max-width:850px;
+  margin:0;
+  font-family:"Noto Serif Display",Georgia,serif;
+  font-size:clamp(48px,7.4vw,92px);
+  font-weight:400;
+  line-height:.98;
+  letter-spacing:-.045em;
+  text-wrap:balance;
+}
+h1 em{font-weight:400;color:var(--teal)}
+.lead{
+  max-width:670px;
+  margin:clamp(26px,3.2vw,38px) 0 0;
+  padding-top:clamp(22px,2.6vw,30px);
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:clamp(15px,1.35vw,18px);
+  line-height:1.75;
+}
+.footer{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+}
+.back{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:54px;
+  padding:0 26px;
+  border-radius:999px;
+  background:var(--teal);
+  color:#fff;
+  text-decoration:none;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  transition:transform .2s ease,background .2s ease;
+}
+.back:hover{transform:translateY(-2px);background:#09584f}
+.meta{
+  max-width:260px;
+  text-align:right;
+  color:#9aa6a2;
+  font-size:10px;
+  font-weight:600;
+  line-height:1.6;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+@media(max-width:680px){
+  body{padding:12px}
+  .result-card{
+    min-height:calc(100svh - 24px);
+    padding:28px 22px 24px;
+    border-radius:28px;
+  }
+  .index{display:none}
+  .check{width:44px;height:44px;font-size:22px}
+  .kicker{font-size:9px;letter-spacing:.14em}
+  .content{margin:62px 0 52px}
+  h1{font-size:clamp(44px,13.5vw,64px);line-height:1.01}
+  .lead{font-size:15px;line-height:1.7}
+  .footer{align-items:stretch;flex-direction:column-reverse}
+  .back{width:100%;min-height:56px}
+  .meta{text-align:left;max-width:none}
+  .result-card::after{font-size:48vw;bottom:-.12em;right:-.12em}
+}
 </style>
 </head>
 <body>
-<main class="card">
-  <div class="check">✓</div>
-  <h1>KES cảm ơn Quý khách.</h1>
-  <p>Thông tin đăng ký SBOX đã được ghi nhận. Chúng tôi sẽ liên hệ trong thời gian sớm nhất để xác nhận thông tin nhận bộ mẫu.</p>
-  <a href="/">Quay lại trang chính</a>
+<main class="result-card">
+  <div class="topline">
+    <div class="status">
+      <div class="check">✓</div>
+      <div class="kicker">Thông tin đã được ghi nhận</div>
+    </div>
+    <div class="index">KES SBOX / 2026–2027</div>
+  </div>
+
+  <section class="content">
+    <h1>Thông tin của Quý Khách<br><em>đã được ghi nhận.</em></h1>
+    <p class="lead">KES đã tiếp nhận thông tin của Quý Khách và sẽ sớm liên hệ để tư vấn, hỗ trợ chi tiết.</p>
+  </section>
+
+  <div class="footer">
+    <a class="back" href="/">Quay lại trang chính</a>
+    <div class="meta">KES Material Kit<br>TP.HCM &amp; Hà Nội</div>
+  </div>
 </main>
+
 <script>
-window.dataLayer=window.dataLayer||[];
-window.dataLayer.push({event:'sbox_registration_success',form_name:'kes-sbox-registration',screening_status:'qualified'});
+(function(){
+  const params=new URLSearchParams(window.location.search);
+  const status=params.get('status');
+  window.dataLayer=window.dataLayer||[];
+  window.dataLayer.push({
+    event:'sbox_registration_result',
+    form_name:'kes-sbox-registration',
+    screening_status:status==='qualified' ? 'qualified' : 'review'
+  });
+})();
 </script>
 </body>
 </html>

@@ -1,2 +1,6 @@
 /result    /result/index.html   200
 /result/   /result/index.html   200
+/success   /result/index.html   200
+/success/  /result/index.html   200
+/review    /result/index.html   200
+/review/   /result/index.html   200
