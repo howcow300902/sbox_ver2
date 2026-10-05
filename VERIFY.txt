@@ -1,0 +1,5 @@
+contains_fetch: False
+contains_alert_error: False
+contains_submitToNetlify: False
+review_native_submit: True
+success_action: True
