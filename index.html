@@ -1546,6 +1546,12 @@ body{
   }
 }
 
+
+/* ===== V26 hide visible screening progress ===== */
+.stepper{
+  display:none !important;
+}
+
 </style>
 </head>
 <body>
@@ -1668,7 +1674,7 @@ body{
     </div>
 
     <div class="form-card form-card--screening">
-      <form id="sboxForm" name="kes-sbox-registration" method="POST" action="/success.html" data-netlify="true" netlify-honeypot="bot-field">
+      <form id="sboxForm" name="kes-sbox-registration" method="POST" action="/success/" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="kes-sbox-registration">
         <p style="display:none"><label>Không điền: <input name="bot-field"></label></p>
 
@@ -1751,10 +1757,6 @@ body{
             </div>
           </div>
 
-          <div class="screen-note">
-            Hồ sơ chưa phù hợp vẫn được KES ghi nhận và sẽ được liên hệ, phản hồi sau.
-          </div>
-
           <div class="screen-actions screen-actions--end">
             <button class="screen-next" type="button" id="step1Next">Tiếp tục</button>
           </div>
@@ -1788,10 +1790,6 @@ body{
                 <option value="Chưa từng sử dụng">Chưa từng sử dụng</option>
               </select>
             </div>
-          </div>
-
-          <div class="screen-note">
-            Bước xác nhận nhận SBOX dành cho doanh nghiệp có năng lực từ 500 tấm/tháng trở lên.
           </div>
 
           <div class="screen-actions">
@@ -1971,10 +1969,46 @@ if(nativeForm){
     return true;
   }
 
-  function submitForReview(reason,stepLabel){
+  async function submitToNetlify(redirectUrl, button){
+    if(button){
+      button.disabled=true;
+      button.textContent='ĐANG GỬI...';
+    }
+
+    try{
+      const formData=new FormData(nativeForm);
+      const body=new URLSearchParams();
+
+      for(const [key,value] of formData.entries()){
+        body.append(key,String(value));
+      }
+
+      const response=await fetch('/',{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:body.toString()
+      });
+
+      if(!response.ok){
+        throw new Error(`Netlify submit failed: ${response.status}`);
+      }
+
+      window.location.assign(redirectUrl);
+    }catch(error){
+      console.error(error);
+
+      if(button){
+        button.disabled=false;
+        button.textContent=button.dataset.originalText || 'TIẾP TỤC';
+      }
+
+      alert('Chưa gửi được thông tin. Vui lòng thử lại.');
+    }
+  }
+
+  async function submitForReview(reason,stepLabel){
     screeningStatus.value=reason;
     screeningStep.value=stepLabel;
-    nativeForm.action='/review.html';
 
     setStepDisabled(3,true);
     if(stepLabel==='Bước 1'){
@@ -1982,12 +2016,11 @@ if(nativeForm){
     }
 
     const activeButton = stepLabel==='Bước 1' ? step1Next : step2Next;
-    if(activeButton){
-      activeButton.disabled=true;
-      activeButton.textContent='ĐANG GỬI...';
+    if(activeButton && !activeButton.dataset.originalText){
+      activeButton.dataset.originalText=activeButton.textContent;
     }
 
-    nativeForm.requestSubmit();
+    await submitToNetlify('/review/',activeButton);
   }
 
   // Initialize: only Step 1 participates in validation/submission.
@@ -2032,28 +2065,26 @@ if(nativeForm){
     });
   });
 
-  nativeForm.addEventListener('submit',e=>{
+  nativeForm.addEventListener('submit',async e=>{
+    e.preventDefault();
+
     const step3=getStep(3);
     const step3Visible=step3 && !step3.hidden;
 
-    // Final qualified submission
-    if(step3Visible){
-      if(!validateStep(3)){
-        e.preventDefault();
-        return;
-      }
-      screeningStatus.value='Đủ điều kiện nhận SBOX';
-      screeningStep.value='Bước 3';
-      qualifiedBusinessType.value='Đạt';
-      qualifiedCapacity.value='Đạt';
-      nativeForm.action='/success.html';
+    if(!step3Visible) return;
+    if(!validateStep(3)) return;
 
-      const btn=step3.querySelector('.submit');
-      if(btn){
-        btn.disabled=true;
-        btn.textContent='ĐANG GỬI...';
-      }
+    screeningStatus.value='Đủ điều kiện nhận SBOX';
+    screeningStep.value='Bước 3';
+    qualifiedBusinessType.value='Đạt';
+    qualifiedCapacity.value='Đạt';
+
+    const btn=step3.querySelector('.submit');
+    if(btn && !btn.dataset.originalText){
+      btn.dataset.originalText=btn.textContent;
     }
+
+    await submitToNetlify('/success/',btn);
   });
 }
 
