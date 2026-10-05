@@ -1,0 +1,5 @@
+transparent_logo_used: True
+old_logo_removed_from_html: True
+slider_interval_3000ms: True
+all_8_webp_refs: True
+old_slide_refs_removed: True

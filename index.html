@@ -40,8 +40,9 @@ linear-gradient(135deg,#efe7d8 0%,#f5f0e5 52%,#ddd6c8 100%)}
 .hero:after{content:"SBOX";position:absolute;right:-3vw;bottom:-8vw;font-family:"Noto Serif Display",serif;
 font-size:min(32vw,520px);line-height:.7;color:rgba(6,62,57,.05);letter-spacing:-.08em}
 .topbar{position:absolute;left:0;right:0;top:0;z-index:10;padding:28px 4vw;display:flex;justify-content:space-between;align-items:center}
-.brand{font-size:30px;font-weight:800;letter-spacing:-.05em;color:var(--kes)}
-.brand small{display:block;font-size:8px;letter-spacing:.05em;font-weight:500;color:var(--ink);opacity:.6}
+.brand{display:inline-flex;align-items:center;line-height:0}
+.brand img{display:block;height:48px;width:auto;object-fit:contain;object-position:left center}
+.brand small{display:none}
 .top-cta{border:1px solid rgba(6,62,57,.2);border-radius:999px;padding:12px 18px;background:rgba(255,255,255,.36);
 font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;backdrop-filter:blur(12px)}
 .hero-grid{min-height:100svh;display:grid;grid-template-columns:.9fr 1.1fr;align-items:center;gap:5vw;padding:120px 5vw 80px;position:relative;z-index:2}
@@ -50,7 +51,7 @@ font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;bac
 .hero h1 em{font-style:italic;color:var(--kes)}
 .hero p{margin:24px 0 0;max-width:560px;color:var(--ink);font-size:16px;line-height:1.75}
 .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
-.cta{min-height:54px;padding:0 22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+.cta{min-height:38px;padding:0 22px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;gap:10px;
 font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:.2s}
 .cta.primary{background:var(--kes);color:#fff}
 .cta.secondary{border:1px solid var(--line);background:rgba(255,255,255,.4)}
@@ -602,6 +603,57 @@ footer{padding:24px 18px;display:block;line-height:1.8}
   display:block;
   transition:transform .7s cubic-bezier(.2,.8,.2,1);
 }
+.feature-visual--slider{
+  display:block;
+  background:#0a423d;
+}
+.experience-slide{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  transform:scale(1.02);
+  transition:opacity .55s ease,transform 1.2s ease;
+}
+.experience-slide.is-active{
+  opacity:1;
+  transform:scale(1);
+}
+.experience-slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  filter:saturate(.96) contrast(1.02);
+}
+.experience-dots{
+  position:absolute;
+  top:18px;
+  right:18px;
+  z-index:4;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:8px 10px;
+  border-radius:999px;
+  background:rgba(6,62,57,.28);
+  backdrop-filter:blur(10px);
+}
+.experience-dot{
+  width:8px;
+  height:8px;
+  border:0;
+  border-radius:50%;
+  padding:0;
+  background:rgba(255,255,255,.34);
+  cursor:pointer;
+}
+.experience-dot.is-active{
+  background:#fff;
+}
+.feature.feature--overlay:hover .experience-slide.is-active img{
+  transform:scale(1.04);
+  transition:transform 1.1s cubic-bezier(.2,.8,.2,1);
+}
 .feature-visual--gallery{
   grid-template-columns:1.1fr .9fr;
   grid-template-rows:1fr 1fr;
@@ -990,14 +1042,8 @@ body{
     position:absolute;
     padding:16px var(--mobile-pad);
   }
-  .brand{
-    font-size:25px;
-    line-height:.9;
-  }
-  .brand small{
-    font-size:7px;
-    margin-top:2px;
-  }
+  .brand{display:inline-flex;align-items:center}
+  .brand img{height:38px;width:auto}
   .top-cta{display:none}
 
   .hero{
@@ -1132,6 +1178,8 @@ body{
   }
   .overlay-shot:first-child{grid-row:1/3}
   .overlay-shot:nth-child(4){display:none}
+  .experience-dots{top:14px;right:14px;padding:7px 9px;gap:6px}
+  .experience-dot{width:7px;height:7px}
 
   .register{
     padding:58px var(--mobile-pad) 26px;
@@ -1193,7 +1241,7 @@ body{
   }
   .submit{
     position:relative;
-    height:54px;
+    height:38px;
     margin-top:22px;
     font-size:11px;
     letter-spacing:.1em;
@@ -1459,7 +1507,7 @@ body{
 .screen-next,
 .screen-back,
 .screen-actions .submit{
-  min-height:54px;
+  min-height:38px;
   border-radius:999px;
   cursor:pointer;
   font-size:10.5px;
@@ -1596,7 +1644,7 @@ body{
 <main>
 <section class="hero">
   <div class="topbar">
-    <div class="brand">KES<small>joining happiness</small></div>
+    <div class="brand"><img src="assets/kes-logo-transparent.png" alt="KES — joining happiness"></div>
     <a class="top-cta" href="#register">Đăng ký SBOX →</a>
   </div>
 
@@ -1660,11 +1708,25 @@ body{
       </article>
 
       <article class="feature feature--overlay feature--experience">
-        <div class="feature-visual feature-visual--gallery">
-          <div class="overlay-shot"><img src="assets/experience-touch.webp" alt="Khách hàng trực tiếp chạm và xem mẫu vật liệu KES" loading="lazy"></div>
-          <div class="overlay-shot"><img src="assets/experience-compare.webp" alt="So sánh mẫu màu và bề mặt KES trong quá trình tư vấn" loading="lazy"></div>
-          <div class="overlay-shot"><img src="assets/experience-visualize.webp" alt="Trực quan hóa phương án nội thất cùng mẫu vật liệu KES" loading="lazy"></div>
-          <div class="overlay-shot"><img src="assets/experience-consult.webp" alt="Khách hàng trao đổi và lựa chọn vật liệu tại showroom KES" loading="lazy"></div>
+        <div class="feature-visual feature-visual--slider experience-slider" id="experienceSlider">
+          <div class="experience-slide is-active"><img src="assets/experience-slide-01.webp" alt="Khách hàng xem và so màu vật liệu KES tại showroom" loading="lazy"></div>
+          <div class="experience-slide"><img src="assets/experience-slide-02.webp" alt="Khách hàng cầm mẫu vật liệu KES để quan sát bề mặt" loading="lazy"></div>
+          <div class="experience-slide"><img src="assets/experience-slide-03.webp" alt="Khách hàng trực tiếp chạm mẫu bề mặt KES" loading="lazy"></div>
+          <div class="experience-slide"><img src="assets/experience-slide-04.webp" alt="Không khí trải nghiệm vật liệu KES trong buổi tư vấn" loading="lazy"></div>
+          <div class="experience-slide"><img src="assets/experience-slide-05.webp" alt="Mẫu phối cảnh nội thất KES được đặt trên bộ mẫu" loading="lazy"></div>
+          <div class="experience-slide"><img src="assets/experience-slide-06.webp" alt="Khách hàng so sánh phối cảnh cùng bảng màu vật liệu KES" loading="lazy"></div>
+          <div class="experience-slide"><img src="assets/experience-slide-07.webp" alt="Khách hàng quan sát phối cảnh vật liệu KES trên nền bề mặt thực tế" loading="lazy"></div>
+          <div class="experience-slide"><img src="assets/experience-slide-08.webp" alt="Khách hàng đặt phối cảnh lên các tấm màu pastel của KES" loading="lazy"></div>
+          <div class="experience-dots" aria-label="Bộ sưu tập hình trải nghiệm vật liệu">
+            <button class="experience-dot is-active" type="button" data-slide="0" aria-label="Xem hình 1"></button>
+            <button class="experience-dot" type="button" data-slide="1" aria-label="Xem hình 2"></button>
+            <button class="experience-dot" type="button" data-slide="2" aria-label="Xem hình 3"></button>
+            <button class="experience-dot" type="button" data-slide="3" aria-label="Xem hình 4"></button>
+            <button class="experience-dot" type="button" data-slide="4" aria-label="Xem hình 5"></button>
+            <button class="experience-dot" type="button" data-slide="5" aria-label="Xem hình 6"></button>
+            <button class="experience-dot" type="button" data-slide="6" aria-label="Xem hình 7"></button>
+            <button class="experience-dot" type="button" data-slide="7" aria-label="Xem hình 8"></button>
+          </div>
         </div>
         <div class="feature-index">03</div>
         <div class="feature-overlay">
@@ -2092,6 +2154,51 @@ if(nativeForm){
   });
 }
 
+</script>
+
+<script>
+(function(){
+  const slider=document.getElementById('experienceSlider');
+  if(!slider) return;
+  const slides=[...slider.querySelectorAll('.experience-slide')];
+  const dots=[...slider.querySelectorAll('.experience-dot')];
+  if(!slides.length) return;
+  let current=0;
+  let timer=null;
+
+  function showSlide(index){
+    current=(index+slides.length)%slides.length;
+    slides.forEach((slide,i)=>slide.classList.toggle('is-active',i===current));
+    dots.forEach((dot,i)=>dot.classList.toggle('is-active',i===current));
+  }
+
+  function start(){
+    stop();
+    timer=setInterval(()=>showSlide(current+1),3000);
+  }
+
+  function stop(){
+    if(timer){
+      clearInterval(timer);
+      timer=null;
+    }
+  }
+
+  dots.forEach((dot,i)=>{
+    dot.addEventListener('click',()=>{
+      showSlide(i);
+      start();
+    });
+  });
+
+  slider.addEventListener('mouseenter',stop);
+  slider.addEventListener('mouseleave',start);
+  slider.addEventListener('touchstart',stop,{passive:true});
+  slider.addEventListener('touchend',start,{passive:true});
+
+  showSlide(0);
+  start();
+})();
 </script>
 
 <a class="mobile-sticky-cta" href="#register" aria-label="Đăng ký nhận SBOX">
