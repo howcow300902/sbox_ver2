@@ -1582,6 +1582,9 @@ body{
   <input name="screening_step">
   <input name="qualified_business_type">
   <input name="qualified_capacity">
+  <input name="eligibility_result">
+  <input name="eligibility_reason">
+  <input name="manual_status">
 </form>
 
 <main>
@@ -1684,6 +1687,9 @@ body{
         <input type="hidden" name="screening_step" id="screeningStep" value="Bước 1">
         <input type="hidden" name="qualified_business_type" id="qualifiedBusinessType" value="">
         <input type="hidden" name="qualified_capacity" id="qualifiedCapacity" value="">
+        <input type="hidden" name="eligibility_result" id="eligibilityResult" value="">
+        <input type="hidden" name="eligibility_reason" id="eligibilityReason" value="">
+        <input type="hidden" name="manual_status" id="manualStatus" value="CHƯA KIỂM TRA">
 
         <div class="form-head-row">
           <div>
@@ -1767,7 +1773,7 @@ body{
         <section class="screen-step" data-step="2" hidden>
           <div class="screen-step-head">
             <h4>Năng lực doanh nghiệp / công ty</h4>
-            <p>Thông tin này giúp KES xác định quy mô sử dụng vật liệu và mức độ phù hợp với SBOX.</p>
+            <p>Thông tin này giúp KES xác định quy mô sử dụng vật liệu và phương án liên hệ phù hợp.</p>
           </div>
 
           <div class="fields">
@@ -1776,8 +1782,8 @@ body{
               <select name="company_capacity" id="companyCapacity" required>
                 <option value="">Chọn sản lượng trung bình / tháng</option>
                 <option value="Dưới 200 tấm / tháng">Dưới 200 tấm / tháng</option>
-                <option value="Từ 200 đến dưới 500 tấm / tháng">Từ 200 đến dưới 500 tấm / tháng</option>
-                <option value="Từ 500 tấm / tháng trở lên">Từ 500 tấm / tháng trở lên</option>
+                <option value="Từ 200 đến 500 tấm / tháng">Từ 200 đến 500 tấm / tháng</option>
+                <option value="Trên 500 tấm / tháng">Trên 500 tấm / tháng</option>
               </select>
             </div>
 
@@ -1802,7 +1808,7 @@ body{
         <section class="screen-step" data-step="3" hidden>
           <div class="screen-step-head">
             <h4>Xác nhận thông tin nhận SBOX</h4>
-            <p>Vui lòng cung cấp thông tin nhận hàng để KES thuận tiện xác nhận và giao bộ mẫu.</p>
+            <p>Vui lòng cung cấp thông tin để KES thuận tiện liên hệ, xác nhận và phản hồi sau đăng ký.</p>
           </div>
 
           <div class="fields">
@@ -1897,6 +1903,9 @@ if(nativeForm){
   const screeningStep=document.getElementById('screeningStep');
   const qualifiedBusinessType=document.getElementById('qualifiedBusinessType');
   const qualifiedCapacity=document.getElementById('qualifiedCapacity');
+  const eligibilityResult=document.getElementById('eligibilityResult');
+  const eligibilityReason=document.getElementById('eligibilityReason');
+  const manualStatus=document.getElementById('manualStatus');
 
   const businessType=document.getElementById('businessType');
   const companyCapacity=document.getElementById('companyCapacity');
@@ -2005,20 +2014,6 @@ if(nativeForm){
     }
   }
 
-  function submitForReview(reason,stepLabel){
-    screeningStatus.value=reason;
-    screeningStep.value=stepLabel;
-
-    // Later-step fields must not be posted for an early screening exit.
-    setStepDisabled(3,true);
-    if(stepLabel==='Bước 1'){
-      setStepDisabled(2,true);
-    }
-
-    const activeButton = stepLabel==='Bước 1' ? step1Next : step2Next;
-    postToNetlifyAndGo('/review/',activeButton);
-  }
-
   // Initialize: only Step 1 participates in validation/submission.
   setStepDisabled(2,true);
   setStepDisabled(3,true);
@@ -2027,30 +2022,23 @@ if(nativeForm){
   step1Next?.addEventListener('click',()=>{
     if(!validateStep(1)) return;
 
-    const eligible=eligibleBusinessTypes.has(businessType.value);
-    qualifiedBusinessType.value=eligible ? 'Đạt' : 'Không đạt';
+    const eligibleType=eligibleBusinessTypes.has(businessType.value);
+    qualifiedBusinessType.value=eligibleType ? 'Đạt nhóm đối tượng' : 'Không thuộc nhóm ưu tiên';
 
-    if(!eligible){
-      submitForReview('Không đạt điều kiện loại hình kinh doanh','Bước 1');
-      return;
-    }
-
-    screeningStatus.value='Đạt bước 1';
+    screeningStatus.value='Đã hoàn tất bước 1';
     showStep(2);
   });
 
   step2Next?.addEventListener('click',()=>{
     if(!validateStep(2)) return;
 
-    const eligible=companyCapacity.value==='Từ 500 tấm / tháng trở lên';
-    qualifiedCapacity.value=eligible ? 'Đạt' : 'Không đạt';
+    const capacityQualified=
+      companyCapacity.value==='Từ 200 đến 500 tấm / tháng' ||
+      companyCapacity.value==='Trên 500 tấm / tháng';
 
-    if(!eligible){
-      submitForReview('Không đạt điều kiện năng lực doanh nghiệp','Bước 2');
-      return;
-    }
+    qualifiedCapacity.value=capacityQualified ? 'Đạt từ 200 tấm/tháng trở lên' : 'Dưới 200 tấm/tháng';
 
-    screeningStatus.value='Đạt bước 2';
+    screeningStatus.value='Đã hoàn tất bước 2';
     showStep(3);
   });
 
@@ -2070,13 +2058,35 @@ if(nativeForm){
     if(!step3Visible) return;
     if(!validateStep(3)) return;
 
-    screeningStatus.value='Đủ điều kiện nhận SBOX';
+    const eligibleType=eligibleBusinessTypes.has(businessType.value);
+    const capacityQualified=
+      companyCapacity.value==='Từ 200 đến 500 tấm / tháng' ||
+      companyCapacity.value==='Trên 500 tấm / tháng';
+
+    const fullyQualified=eligibleType && capacityQualified;
+
+    qualifiedBusinessType.value=eligibleType ? 'Đạt nhóm đối tượng' : 'Không thuộc nhóm ưu tiên';
+    qualifiedCapacity.value=capacityQualified ? 'Đạt từ 200 tấm/tháng trở lên' : 'Dưới 200 tấm/tháng';
+
+    eligibilityResult.value=fullyQualified ? 'ĐẠT' : 'CHƯA ĐẠT';
+    manualStatus.value='CHƯA KIỂM TRA';
+
+    const reasons=[];
+    if(!eligibleType) reasons.push('Loại hình không thuộc nhóm ưu tiên');
+    if(!capacityQualified) reasons.push('Năng lực dưới 200 tấm/tháng');
+    eligibilityReason.value=fullyQualified ? 'Đủ điều kiện hệ thống' : reasons.join(' + ');
+
     screeningStep.value='Bước 3';
-    qualifiedBusinessType.value='Đạt';
-    qualifiedCapacity.value='Đạt';
+    screeningStatus.value=fullyQualified
+      ? 'Đủ điều kiện - Liên hệ xác nhận đơn vị nhận quà SBOX'
+      : 'Chưa đạt điều kiện - Liên hệ phản hồi sau';
 
     const btn=step3.querySelector('.submit');
-    postToNetlifyAndGo('/success/',btn);
+    const target=fullyQualified
+      ? '/result/?status=qualified'
+      : '/result/?status=review';
+
+    postToNetlifyAndGo(target,btn);
   });
 }
 
