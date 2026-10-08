@@ -1608,9 +1608,13 @@ body{
 .form-card .form-head-row>div:first-child{width:100%!important;max-width:none!important;}
 .form-card .form-head-row h3{max-width:none!important;width:100%!important;}
 
-/* Updated SBOX campaign copy */
-.hero h1.hero-title-updated{font-size:clamp(52px,5.6vw,84px);line-height:.9}
-.intro h2.intro-title-updated{font-size:clamp(48px,4.6vw,70px);line-height:.98}
+/* Vietnamese typography: leave room for tone marks and keep form labels legible. */
+body{font-family:"DM Sans","Segoe UI",Arial,sans-serif}
+.hero h1.hero-title-updated{font-size:clamp(52px,5.6vw,84px);line-height:1.04}
+.intro h2.intro-title-updated{font-size:clamp(48px,4.6vw,70px);line-height:1.07}
+.register h2{line-height:1.06}
+.field label{font-size:11px;line-height:1.4;letter-spacing:.06em;color:rgba(18,48,44,.68)}
+.screen-step-head h4{line-height:1.28;letter-spacing:0}
 @media(max-width:620px){
   .hero h1.hero-title-updated{font-size:clamp(46px,13vw,58px)}
   .intro h2.intro-title-updated{font-size:clamp(43px,11vw,54px)}
@@ -1778,7 +1782,7 @@ body{
           </div>
           <div class="stepper-line"></div>
           <div class="stepper-item" data-step-indicator="2">
-            <span>02</span><small>Năng lực</small>
+            <span>02</span><small>Tiêu thụ</small>
           </div>
           <div class="stepper-line"></div>
           <div class="stepper-item" data-step-indicator="3">
@@ -1844,15 +1848,15 @@ body{
         <!-- STEP 2 -->
         <section class="screen-step" data-step="2" hidden>
           <div class="screen-step-head">
-            <h4>Năng lực doanh nghiệp / công ty</h4>
+            <h4>Số lượng tiêu thụ ván nội thất</h4>
             
           </div>
 
           <div class="fields">
             <div class="field wide">
-              <label>Năng lực doanh nghiệp *</label>
+              <label>Số lượng tiêu thụ ván nội thất *</label>
               <select name="company_capacity" id="companyCapacity" required>
-                <option value="">Chọn sản lượng trung bình / tháng</option>
+                <option value="">Chọn số lượng trung bình / tháng</option>
                 <option value="Dưới 200 tấm / tháng">Dưới 200 tấm / tháng</option>
                 <option value="Từ 200 đến 500 tấm / tháng">Từ 200 đến 500 tấm / tháng</option>
                 <option value="Trên 500 tấm / tháng">Trên 500 tấm / tháng</option>
@@ -2145,7 +2149,7 @@ if(nativeForm){
 
     const reasons=[];
     if(!eligibleType) reasons.push('Loại hình không thuộc nhóm ưu tiên');
-    if(!capacityQualified) reasons.push('Năng lực dưới 200 tấm/tháng');
+    if(!capacityQualified) reasons.push('Số lượng tiêu thụ dưới 200 tấm/tháng');
     eligibilityReason.value=fullyQualified ? 'Đủ điều kiện hệ thống' : reasons.join(' + ');
 
     screeningStep.value='Bước 3';
